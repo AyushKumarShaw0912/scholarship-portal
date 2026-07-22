@@ -21,4 +21,19 @@ export const siteConfig = {
   copyright: `© ${new Date().getFullYear()} Scholarship Portal. All rights reserved.`,
   applyUrl: process.env.NEXT_PUBLIC_APPLY_URL ?? "https://example.com/apply",
   tagline: "Empowering Future Scientists",
+
+  locale: "en-IN",
+
+  author: "Scholarship Portal",
+
+  keywords: [
+    "Scholarship",
+    "Science Scholarship",
+    "JEE Scholarship",
+    "NEET Scholarship",
+    "Education",
+    "India",
+    "Class 11",
+    "Class 12",
+  ],
 } as const;
