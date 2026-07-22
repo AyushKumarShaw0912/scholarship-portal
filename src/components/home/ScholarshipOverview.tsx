@@ -1,4 +1,4 @@
-import { scholarships } from "@/data/scholarships";
+import { scholarships } from "@/data";
 
 import { Container, Section } from "@/layout";
 
