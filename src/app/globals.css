@@ -199,39 +199,5 @@
     @apply font-semibold tracking-tight;
   }
 }
-@utility container-wrapper {
-  margin-inline: auto;
-  width: 100%;
-  max-width: 1280px;
-  padding-inline: 1rem;
-}
 
-@media (min-width: 768px) {
-  @utility container-wrapper {
-    padding-inline: 1.5rem;
-  }
-}
 
-@media (min-width: 1024px) {
-  @utility container-wrapper {
-    padding-inline: 2rem;
-  }
-}
-
-@utility section-padding {
-  padding-block: 5rem;
-}
-
-@utility section-padding-sm {
-  padding-block: 3rem;
-}
-
-@utility card-hover {
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease;
-}
-
-@utility card-hover:hover {
-  transform: translateY(-2px);
-}
