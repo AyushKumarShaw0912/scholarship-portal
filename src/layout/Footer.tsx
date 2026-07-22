@@ -65,8 +65,6 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t py-6 text-sm text-muted-foreground md:flex-row">
           <p>{siteConfig.copyright}</p>
-
-          <p>Made with ❤️ in India</p>
         </div>
       </Container>
     </footer>
