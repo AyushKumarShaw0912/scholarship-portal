@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface ApplyButtonProps {
@@ -11,11 +11,19 @@ interface ApplyButtonProps {
 
 export function ApplyButton({ href, className }: ApplyButtonProps) {
   return (
-    <Button className={cn(className)}>
-      <Link href={href} target="_blank" rel="noopener noreferrer">
-        Apply Now
-        <ArrowUpRight className="ml-2 size-4" />
-      </Link>
-    </Button>
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        buttonVariants(),
+        "inline-flex items-center justify-center gap-2",
+        className,
+      )}
+    >
+      <span>Apply Now</span>
+
+      <ArrowUpRight className="size-4 shrink-0" />
+    </Link>
   );
 }

@@ -7,7 +7,6 @@ export function ScholarshipHero() {
       <Container>
         <SectionHeading
           title="Scholarships"
-          align="left"
           description="Explore our scholarship programs designed to support talented students pursuing science education and competitive entrance examination preparation."
         />
       </Container>
