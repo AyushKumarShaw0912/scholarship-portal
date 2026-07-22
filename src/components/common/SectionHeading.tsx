@@ -16,7 +16,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "space-y-4",
+        "space-y-2",
         align === "center" ? "text-center" : "text-left",
         className,
       )}
