@@ -19,5 +19,10 @@ export function iconSelectField({
       label: value,
       value,
     })),
+    admin: {
+      components: {
+        Field: "/components/payload/IconSelectField#IconSelectField",
+      },
+    },
   };
 }
