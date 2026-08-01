@@ -14,6 +14,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { uiCopy } from "@/data";
 
 interface MobileNavProps {
   readonly pathname: string;
@@ -28,7 +29,7 @@ export function MobileNav({ pathname, items, applyUrl }: MobileNavProps) {
     <div className="lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
-          <Button variant="ghost" size="icon" aria-label="Open Navigation Menu">
+          <Button variant="ghost" size="icon" aria-label={uiCopy.openNavMenu}>
             <Menu className="size-5" />
           </Button>
         </SheetTrigger>

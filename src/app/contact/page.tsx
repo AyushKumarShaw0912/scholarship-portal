@@ -1,64 +1,72 @@
 import type { Metadata } from "next";
 
-import { Mail, MapPin } from "lucide-react";
-
 import { siteConfig } from "@/config";
+import { contactContent } from "@/data";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Reveal } from "@/components/common/Reveal";
+import { ContentCard } from "@/components/common/ContentCard";
 
 export const metadata: Metadata = {
-  title: `Contact | ${siteConfig.name}`,
-  description: "Get in touch with the scholarship team.",
+  title: `${contactContent.meta.title} | ${siteConfig.name}`,
+  description: contactContent.meta.description,
 };
 
 export default function ContactPage() {
+  const { heading, infoItems, enquiry } = contactContent;
+
   return (
     <Section spacing="lg">
       <Container>
         <Reveal>
           <SectionHeading
-            title="Contact Us"
-            description="Have questions about our scholarship programs? We'd be happy to help."
+            title={heading.title}
+            description={heading.description}
           />
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
-            <article className="rounded-2xl border bg-card p-8">
-              <Mail className="mb-4 size-6 text-primary" />
+            {infoItems.map((item) => {
+              const Icon = item.icon;
 
-              <h2 className="text-xl font-semibold">Email</h2>
+              return (
+                <ContentCard key={item.id} className="p-8">
+                  <Icon className="mb-4 size-6 text-primary" />
 
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
-              >
-                {siteConfig.email}
-              </a>
-            </article>
+                  <h2 className="text-xl font-semibold">{item.title}</h2>
 
-            <article className="rounded-2xl border bg-card p-8">
-              <MapPin className="mb-4 size-6 text-primary" />
-
-              <h2 className="text-xl font-semibold">Address</h2>
-
-              <p className="mt-4 text-muted-foreground">
-                Kolkata, West Bengal
-                <br />
-                India
-              </p>
-            </article>
+                  {item.type === "email" ? (
+                    <a
+                      href={`mailto:${siteConfig.email}`}
+                      className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {siteConfig.email}
+                    </a>
+                  ) : (
+                    <p className="mt-4 text-muted-foreground">
+                      {item.lines?.map((line, index) => (
+                        <span key={line}>
+                          {index > 0 ? <br /> : null}
+                          {line}
+                        </span>
+                      ))}
+                    </p>
+                  )}
+                </ContentCard>
+              );
+            })}
           </div>
 
-          <div className="mx-auto mt-12 max-w-4xl rounded-2xl border bg-card p-8">
-            <h2 className="text-xl font-semibold">Scholarship Enquiries</h2>
+          <ContentCard
+            as="div"
+            className="mx-auto mt-12 max-w-4xl p-8"
+          >
+            <h2 className="text-xl font-semibold">{enquiry.title}</h2>
 
             <p className="mt-4 leading-8 text-muted-foreground">
-              If you have any questions regarding eligibility, required
-              documents, the selection process, or the application procedure,
-              please contact us via email. We will respond as soon as possible.
+              {enquiry.body}
             </p>
-          </div>
+          </ContentCard>
         </Reveal>
       </Container>
     </Section>

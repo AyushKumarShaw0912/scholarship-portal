@@ -1,43 +1,32 @@
-import Link from "next/link";
 import { SearchX } from "lucide-react";
 
-import { buttonVariants } from "@/components/ui/button";
+import { systemCopy } from "@/data";
+import { StatusView } from "@/components/common/StatusView";
 import { Container, Section } from "@/layout";
-import { cn } from "@/lib/utils";
 
 export default function NotFound() {
+  const { notFound } = systemCopy;
+
   return (
     <Section spacing="lg">
       <Container>
-        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-          <SearchX className="size-20 text-primary" />
-
-          <h1 className="mt-8 text-5xl font-bold">404</h1>
-
-          <h2 className="mt-4 text-2xl font-semibold">Page Not Found</h2>
-
-          <p className="mt-4 text-muted-foreground">
-            The page you are looking for doesn&apos;t exist or may have been
-            moved.
-          </p>
-
-          <div className="mt-8 flex gap-4">
-            <Link href="/" className={cn(buttonVariants())}>
-              Back to Home
-            </Link>
-
-            <Link
-              href="/scholarships"
-              className={cn(
-                buttonVariants({
-                  variant: "outline",
-                }),
-              )}
-            >
-              Scholarships
-            </Link>
-          </div>
-        </div>
+        <StatusView
+          icon={SearchX}
+          iconClassName="text-primary"
+          code={notFound.code}
+          title={notFound.title}
+          description={notFound.description}
+          primaryAction={{
+            label: notFound.primaryAction.label,
+            href: notFound.primaryAction.href,
+            variant: notFound.primaryAction.variant,
+          }}
+          secondaryAction={{
+            label: notFound.secondaryAction.label,
+            href: notFound.secondaryAction.href,
+            variant: notFound.secondaryAction.variant,
+          }}
+        />
       </Container>
     </Section>
   );

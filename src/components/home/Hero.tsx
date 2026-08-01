@@ -1,9 +1,9 @@
-import Link from "next/link";
-
 import { homeContent } from "@/data";
+import { siteConfig } from "@/config";
+import { ROUTES } from "@/constants/routes";
 import { Container, Section } from "@/layout";
 import { StatCard } from "@/components/common/StatCard";
-import { siteConfig } from "@/config";
+import { CtaLink } from "@/components/actions/CtaLink";
 
 export function Hero() {
   const { hero } = homeContent;
@@ -27,21 +27,18 @@ export function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link
+            <CtaLink
               href={siteConfig.applyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-8 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              Apply Now
-            </Link>
+              label={hero.primaryCta}
+              appearance="hero"
+              external
+            />
 
-            <Link
-              href="/scholarships"
-              className="inline-flex h-11 items-center justify-center rounded-lg border px-8 text-sm font-medium transition-colors hover:bg-accent"
-            >
-              View Scholarships
-            </Link>
+            <CtaLink
+              href={ROUTES.SCHOLARSHIPS}
+              label={hero.secondaryCta}
+              appearance="outline"
+            />
           </div>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

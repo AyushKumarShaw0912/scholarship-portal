@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import type { Scholarship } from "@/types";
 
 import { siteConfig } from "@/config";
+import { uiCopy } from "@/data";
+import { ROUTES } from "@/constants/routes";
 import { Container, Section } from "@/layout";
+import { CtaLink } from "@/components/actions/CtaLink";
 
 interface ScholarshipHeaderProps {
   readonly scholarship: Scholarship;
@@ -16,16 +19,16 @@ export function ScholarshipHeader({ scholarship }: ScholarshipHeaderProps) {
       <Container>
         <div className="mx-auto max-w-4xl">
           <Link
-            href="/scholarships"
+            href={ROUTES.SCHOLARSHIPS}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             <ArrowLeft className="size-4" />
-            Back to Scholarships
+            {uiCopy.backToScholarships}
           </Link>
 
           <div className="mt-8 space-y-6">
             <div className="inline-flex rounded-full border bg-primary/5 px-4 py-1 text-sm font-medium text-primary">
-              Scholarship Program
+              {uiCopy.scholarshipProgram}
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
@@ -37,22 +40,19 @@ export function ScholarshipHeader({ scholarship }: ScholarshipHeaderProps) {
             </p>
 
             <div className="flex flex-col gap-4 pt-4 sm:flex-row">
-              <a
+              <CtaLink
                 href={siteConfig.applyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-8 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                Apply Now
-                <ExternalLink className="ml-2 size-4" />
-              </a>
+                label={uiCopy.applyNow}
+                appearance="hero"
+                external
+                showExternalIcon
+              />
 
-              <Link
-                href="/contact"
-                className="inline-flex h-11 items-center justify-center rounded-lg border px-8 text-sm font-medium transition-colors hover:bg-accent"
-              >
-                Contact Us
-              </Link>
+              <CtaLink
+                href={ROUTES.CONTACT}
+                label={uiCopy.contactUs}
+                appearance="outline"
+              />
             </div>
           </div>
         </div>

@@ -2,7 +2,9 @@ import { CheckCircle2 } from "lucide-react";
 
 import type { Scholarship } from "@/types";
 
+import { scholarshipPageContent } from "@/data";
 import { SectionHeading } from "@/components/common/SectionHeading";
+import { ContentCard } from "@/components/common/ContentCard";
 
 interface ScholarshipBenefitsProps {
   readonly scholarship: Scholarship;
@@ -10,33 +12,31 @@ interface ScholarshipBenefitsProps {
 
 export function ScholarshipBenefits({ scholarship }: ScholarshipBenefitsProps) {
   return (
-    <>
-      <>
-        <SectionHeading title="Scholarship Benefits" align="left" />
+    <div>
+      <SectionHeading
+        title={scholarshipPageContent.detail.sectionTitles.benefits}
+        align="left"
+      />
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {scholarship.benefits.map((benefit) => (
-            <article
-              key={benefit.id}
-              className="rounded-2xl border bg-card p-6"
-            >
-              <div className="flex items-start gap-4">
-                <CheckCircle2 className="mt-1 size-5 text-primary" />
+      <div className="mt-10 grid gap-6 md:grid-cols-2">
+        {scholarship.benefits.map((benefit) => (
+          <ContentCard key={benefit.id} className="p-6">
+            <div className="flex items-start gap-4">
+              <CheckCircle2 className="mt-1 size-5 text-primary" />
 
-                <div>
-                  <h3 className="font-semibold">{benefit.title}</h3>
+              <div>
+                <h3 className="font-semibold">{benefit.title}</h3>
 
-                  {benefit.description && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {benefit.description}
-                    </p>
-                  )}
-                </div>
+                {benefit.description && (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {benefit.description}
+                  </p>
+                )}
               </div>
-            </article>
-          ))}
-        </div>
-      </>
-    </>
+            </div>
+          </ContentCard>
+        ))}
+      </div>
+    </div>
   );
 }

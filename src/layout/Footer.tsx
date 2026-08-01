@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 
 import { navigation, siteConfig } from "@/config";
+import { uiCopy } from "@/data";
 
 import { Button } from "@/components/ui/button";
 
@@ -13,7 +14,6 @@ export function Footer() {
     <footer className="mt-20 border-t bg-muted/30">
       <Container>
         <div className="grid gap-10 py-12 md:grid-cols-3">
-          {/* Brand */}
           <div className="space-y-4">
             <Brand />
 
@@ -27,14 +27,13 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Apply Now
+                {uiCopy.applyNow}
               </Link>
             </Button>
           </div>
 
-          {/* Navigation */}
           <div>
-            <h3 className="mb-4 font-semibold">Quick Links</h3>
+            <h3 className="mb-4 font-semibold">{uiCopy.quickLinks}</h3>
 
             <nav className="flex flex-col gap-3">
               {navigation.map((item) => (
@@ -49,9 +48,8 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="mb-4 font-semibold">Contact</h3>
+            <h3 className="mb-4 font-semibold">{uiCopy.contact}</h3>
 
             <a
               href={`mailto:${siteConfig.email}`}

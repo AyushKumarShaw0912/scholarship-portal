@@ -31,7 +31,7 @@ export function ScholarshipDetails({ scholarship }: ScholarshipDetailsProps) {
           </div>
 
           <div className="lg:col-span-4">
-            <ScholarshipSidebar scholarship={scholarship} />
+            <ScholarshipSidebar />
           </div>
         </div>
       </Container>

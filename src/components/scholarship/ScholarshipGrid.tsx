@@ -2,17 +2,16 @@ import { scholarships } from "@/data";
 
 import { Container, Section } from "@/layout";
 
-import { ScholarshipCard } from "./ScholarshipCard";
+import { ScholarshipList } from "./ScholarshipList";
 
 export function ScholarshipGrid() {
   return (
     <Section>
       <Container>
-        <div className="grid gap-8 md:grid-cols-2">
-          {scholarships.map((scholarship) => (
-            <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
-          ))}
-        </div>
+        <ScholarshipList
+          scholarships={scholarships}
+          className="md:grid-cols-2"
+        />
       </Container>
     </Section>
   );

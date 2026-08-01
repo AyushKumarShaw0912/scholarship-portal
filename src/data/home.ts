@@ -3,6 +3,7 @@ import { Award, BookOpen, GraduationCap, Users } from "lucide-react";
 import type { HomeContent } from "@/types";
 
 import { scholarships } from "./scholarships";
+import { uiCopy } from "./ui";
 
 export const homeContent = {
   hero: {
@@ -14,6 +15,10 @@ export const homeContent = {
 
     description:
       "Full coaching scholarships for deserving students. Build your future through expert faculty, complete tuition support and career guidance.",
+
+    primaryCta: uiCopy.applyNow,
+
+    secondaryCta: uiCopy.viewScholarships,
 
     stats: [
       {
@@ -33,6 +38,22 @@ export const homeContent = {
         label: "Selection Exam",
       },
     ],
+  },
+
+  sections: {
+    scholarships: {
+      title: "Available Scholarships",
+      description:
+        "Explore our scholarship opportunities designed to support talented students pursuing science education.",
+    },
+    benefits: {
+      title: "Why Choose Our Scholarship?",
+      description: "We provide much more than financial assistance.",
+    },
+    applicationProcess: {
+      title: "Application Process",
+      description: "A simple four-step process to apply.",
+    },
   },
 
   benefits: [

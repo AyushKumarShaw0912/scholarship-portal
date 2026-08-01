@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { siteConfig } from "@/config";
-import { scholarships } from "@/data";
+import { scholarships, uiCopy } from "@/data";
+import { getScholarshipBySlug } from "@/lib/scholarships";
 
 import { ScholarshipHeader } from "@/components/scholarship/ScholarshipHeader";
 import { ScholarshipDetails } from "@/components/scholarship/ScholarshipDetails";
@@ -18,17 +19,16 @@ export async function generateMetadata({
 }: PageProps<"/scholarships/[slug]">): Promise<Metadata> {
   const { slug } = await params;
 
-  const scholarship = scholarships.find((item) => item.slug === slug);
+  const scholarship = getScholarshipBySlug(slug);
 
   if (!scholarship) {
     return {
-      title: "Scholarship Not Found",
+      title: uiCopy.scholarshipNotFound,
     };
   }
 
   return {
     title: `${scholarship.title} | ${siteConfig.name}`,
-
     description: scholarship.shortDescription,
   };
 }
@@ -38,7 +38,7 @@ export default async function ScholarshipPage({
 }: PageProps<"/scholarships/[slug]">) {
   const { slug } = await params;
 
-  const scholarship = scholarships.find((item) => item.slug === slug);
+  const scholarship = getScholarshipBySlug(slug);
 
   if (!scholarship) {
     notFound();

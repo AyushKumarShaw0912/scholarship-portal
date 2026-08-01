@@ -1,26 +1,26 @@
-import { scholarships } from "@/data";
+import { homeContent, scholarships } from "@/data";
 
 import { Container, Section } from "@/layout";
-
 import { SectionHeading } from "@/components/common/SectionHeading";
-import { ScholarshipCard } from "@/components/scholarship/ScholarshipCard";
+import { ScholarshipList } from "@/components/scholarship/ScholarshipList";
 import { Reveal } from "../common/Reveal";
 
 export function ScholarshipOverview() {
+  const { sections } = homeContent;
+
   return (
     <Section spacing="lg">
       <Container>
         <Reveal>
           <SectionHeading
-            title="Available Scholarships"
-            description="Explore our scholarship opportunities designed to support talented students pursuing science education."
+            title={sections.scholarships.title}
+            description={sections.scholarships.description}
           />
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            {scholarships.map((scholarship) => (
-              <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
-            ))}
-          </div>
+          <ScholarshipList
+            scholarships={scholarships}
+            className="mt-12 lg:grid-cols-2"
+          />
         </Reveal>
       </Container>
     </Section>

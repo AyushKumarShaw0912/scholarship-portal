@@ -1,14 +1,14 @@
+import { scholarshipPageContent } from "@/data";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container, Section } from "@/layout";
 
 export function ScholarshipHero() {
+  const { list } = scholarshipPageContent;
+
   return (
     <Section spacing="lg">
       <Container>
-        <SectionHeading
-          title="Scholarships"
-          description="Explore our scholarship programs designed to support talented students pursuing science education and competitive entrance examination preparation."
-        />
+        <SectionHeading title={list.title} description={list.description} />
       </Container>
     </Section>
   );

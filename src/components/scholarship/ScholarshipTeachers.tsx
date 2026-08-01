@@ -1,6 +1,8 @@
 import type { Scholarship } from "@/types";
 
+import { scholarshipPageContent } from "@/data";
 import { SectionHeading } from "@/components/common/SectionHeading";
+import { ContentCard } from "@/components/common/ContentCard";
 
 interface ScholarshipTeachersProps {
   readonly scholarship: Scholarship;
@@ -8,23 +10,21 @@ interface ScholarshipTeachersProps {
 
 export function ScholarshipTeachers({ scholarship }: ScholarshipTeachersProps) {
   return (
-    <>
-      <>
-        <SectionHeading title="Faculty" align="left" />
+    <div>
+      <SectionHeading
+        title={scholarshipPageContent.detail.sectionTitles.faculty}
+        align="left"
+      />
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {scholarship.teachers.map((teacher) => (
-            <article
-              key={teacher.subject}
-              className="rounded-2xl border bg-card p-6"
-            >
-              <p className="text-sm text-muted-foreground">{teacher.subject}</p>
+      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {scholarship.teachers.map((teacher) => (
+          <ContentCard key={teacher.subject} className="p-6">
+            <p className="text-sm text-muted-foreground">{teacher.subject}</p>
 
-              <h3 className="mt-2 font-semibold">{teacher.name}</h3>
-            </article>
-          ))}
-        </div>
-      </>
-    </>
+            <h3 className="mt-2 font-semibold">{teacher.name}</h3>
+          </ContentCard>
+        ))}
+      </div>
+    </div>
   );
 }
