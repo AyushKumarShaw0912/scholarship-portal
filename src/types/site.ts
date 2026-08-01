@@ -5,8 +5,10 @@ export interface SiteSettings {
   readonly shortName: string;
   readonly description: string;
   readonly url: string;
-  readonly logo: string;
-  readonly favicon: string;
+  /** Optimized logo URL when a CMS media upload is set; otherwise null (Brand uses Lucide). */
+  readonly logoUrl: string | null;
+  /** Favicon URL when a CMS media upload is set; otherwise null. */
+  readonly faviconUrl: string | null;
   readonly email: string;
   readonly phone: string;
   readonly address: string;

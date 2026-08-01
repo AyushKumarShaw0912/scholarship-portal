@@ -5,6 +5,28 @@ import { fileURLToPath } from "url";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
+function r2RemotePatterns(): NonNullable<
+  NonNullable<NextConfig["images"]>["remotePatterns"]
+> {
+  const publicUrl = process.env.R2_PUBLIC_URL?.replace(/\/$/, "");
+  if (!publicUrl) {
+    return [];
+  }
+
+  try {
+    const { protocol, hostname, port } = new URL(publicUrl);
+    return [
+      {
+        protocol: protocol.replace(":", "") as "http" | "https",
+        hostname,
+        ...(port ? { port } : {}),
+      },
+    ];
+  } catch {
+    return [];
+  }
+}
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
@@ -13,6 +35,7 @@ const nextConfig: NextConfig = {
         pathname: "/api/media/file/**",
       },
     ],
+    remotePatterns: r2RemotePatterns(),
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

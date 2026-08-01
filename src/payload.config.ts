@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { s3Storage } from "@payloadcms/storage-s3";
 import path from "path";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -17,6 +18,9 @@ import {
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+const r2Bucket = process.env.R2_BUCKET;
+const r2PublicUrl = process.env.R2_PUBLIC_URL?.replace(/\/$/, "");
 
 export default buildConfig({
   admin: {
@@ -38,4 +42,31 @@ export default buildConfig({
     },
   }),
   sharp,
+  plugins: [
+    s3Storage({
+      enabled: Boolean(r2Bucket),
+      bucket: r2Bucket || "",
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => {
+            const key = prefix ? `${prefix}/${filename}` : filename;
+            if (!r2PublicUrl) {
+              return `/api/media/file/${key}`;
+            }
+            return `${r2PublicUrl}/${key}`;
+          },
+        },
+      },
+      config: {
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
+        },
+        region: "auto",
+        endpoint: process.env.R2_ENDPOINT,
+        forcePathStyle: true,
+      },
+    }),
+  ],
 });

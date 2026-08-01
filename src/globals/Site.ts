@@ -55,15 +55,15 @@ export const Site: GlobalConfig = {
     },
     {
       name: "logo",
-      type: "text",
-      required: true,
-      defaultValue: "/images/logo.svg",
+      type: "upload",
+      relationTo: "media",
+      required: false,
     },
     {
       name: "favicon",
-      type: "text",
-      required: true,
-      defaultValue: "/favicon.ico",
+      type: "upload",
+      relationTo: "media",
+      required: false,
     },
     {
       name: "locale",

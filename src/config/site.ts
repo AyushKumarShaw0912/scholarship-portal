@@ -8,9 +8,11 @@ export const siteConfig = {
 
   url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 
-  logo: "/images/logo.svg",
+  /** No static logo asset — Brand falls back to Lucide when null. */
+  logoUrl: null as string | null,
 
-  favicon: "/favicon.ico",
+  /** No static favicon asset — metadata omits icons when null. */
+  faviconUrl: null as string | null,
 
   email: "futuresciencescholars@gmail.com",
 

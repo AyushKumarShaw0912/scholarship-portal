@@ -24,5 +24,48 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     staticDir: path.resolve(dirname, "../../public/media"),
+    mimeTypes: [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/svg+xml",
+      "image/x-icon",
+      "image/vnd.microsoft.icon",
+    ],
+    formatOptions: {
+      format: "webp",
+      options: {
+        quality: 80,
+      },
+    },
+    resizeOptions: {
+      width: 1920,
+      withoutEnlargement: true,
+    },
+    imageSizes: [
+      {
+        name: "thumbnail",
+        width: 200,
+        height: 200,
+        position: "centre",
+        formatOptions: {
+          format: "webp",
+          options: { quality: 75 },
+        },
+        withoutEnlargement: true,
+      },
+      {
+        name: "logo",
+        width: 256,
+        height: 256,
+        position: "centre",
+        formatOptions: {
+          format: "webp",
+          options: { quality: 85 },
+        },
+        withoutEnlargement: true,
+      },
+    ],
+    adminThumbnail: "thumbnail",
   },
 };

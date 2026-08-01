@@ -20,7 +20,11 @@ export function Footer({ site, navigation }: FooterProps) {
       <Container>
         <div className="grid gap-8 py-10 md:grid-cols-3">
           <div className="space-y-4">
-            <Brand shortName={site.shortName} tagline={site.tagline} />
+            <Brand
+              shortName={site.shortName}
+              tagline={site.tagline}
+              logoUrl={site.logoUrl}
+            />
 
             <p className="max-w-sm text-sm leading-6 text-muted-foreground">
               {site.description}

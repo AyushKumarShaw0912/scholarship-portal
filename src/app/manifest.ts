@@ -4,6 +4,7 @@ import { getSiteSettings } from "@/lib/cms";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const site = await getSiteSettings();
+  const iconSrc = site.faviconUrl ?? site.logoUrl;
 
   return {
     name: site.name,
@@ -14,17 +15,17 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     background_color: "#ffffff",
     theme_color: "#2563eb",
     lang: "en",
-    icons: [
-      {
-        src: "/icon-192.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "/icon-512.png",
-        sizes: "512x512",
-        type: "image/png",
-      },
-    ],
+    ...(iconSrc
+      ? {
+          icons: [
+            {
+              src: iconSrc,
+              sizes: "any",
+              type: "image/png",
+              purpose: "any",
+            },
+          ],
+        }
+      : {}),
   };
 }
