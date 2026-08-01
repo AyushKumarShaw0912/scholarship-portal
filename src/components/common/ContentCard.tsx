@@ -12,8 +12,8 @@ interface ContentCardProps {
 }
 
 const hoverClasses: Record<Exclude<ContentCardHover, false>, string> = {
-  lift: "transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
-  shadow: "transition-all duration-300 hover:-translate-y-1 hover:shadow-md",
+  lift: "motion-lift",
+  shadow: "motion-lift-sm",
 };
 
 export function ContentCard({
@@ -25,7 +25,7 @@ export function ContentCard({
   return (
     <Comp
       className={cn(
-        "rounded-2xl border bg-card",
+        "rounded-2xl border bg-card/90 backdrop-blur-[2px]",
         hover && hoverClasses[hover],
         className,
       )}

@@ -8,7 +8,9 @@ export function ScholarshipHero() {
   return (
     <Section spacing="lg">
       <Container>
-        <SectionHeading title={list.title} description={list.description} />
+        <div className="motion-enter">
+          <SectionHeading title={list.title} description={list.description} />
+        </div>
       </Container>
     </Section>
   );

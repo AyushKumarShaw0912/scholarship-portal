@@ -8,7 +8,7 @@ export function ScholarshipSidebar() {
 
   return (
     <aside className="lg:sticky lg:top-28">
-      <ContentCard as="div" className="p-6 shadow-sm">
+      <ContentCard as="div" hover="shadow" className="p-6 shadow-sm">
         <h2 className="text-xl font-semibold">{sidebar.title}</h2>
 
         <p className="mt-3 text-sm leading-6 text-muted-foreground">

@@ -30,7 +30,7 @@ export default function ContactPage() {
               const Icon = item.icon;
 
               return (
-                <ContentCard key={item.id} className="p-8">
+                <ContentCard key={item.id} hover="lift" className="p-8">
                   <Icon className="mb-4 size-6 text-primary" />
 
                   <h2 className="text-xl font-semibold">{item.title}</h2>
@@ -59,6 +59,7 @@ export default function ContactPage() {
 
           <ContentCard
             as="div"
+            hover="shadow"
             className="mx-auto mt-12 max-w-4xl p-8"
           >
             <h2 className="text-xl font-semibold">{enquiry.title}</h2>

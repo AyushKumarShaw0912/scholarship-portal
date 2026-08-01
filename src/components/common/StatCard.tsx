@@ -9,7 +9,8 @@ export function StatCard({ value, label }: StatCardProps) {
   return (
     <ContentCard
       as="div"
-      className="p-6 text-center shadow-sm transition-shadow hover:shadow-md"
+      hover="shadow"
+      className="p-6 text-center shadow-sm"
     >
       <h3 className="text-3xl font-bold text-primary">{value}</h3>
 

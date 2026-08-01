@@ -1,5 +1,6 @@
 import type { Scholarship } from "@/types";
 
+import { Reveal } from "@/components/common/Reveal";
 import { Container, Section } from "@/layout";
 
 import { ScholarshipBenefits } from "./ScholarshipBenefits";
@@ -19,19 +20,31 @@ export function ScholarshipDetails({ scholarship }: ScholarshipDetailsProps) {
       <Container>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="space-y-16 lg:col-span-8">
-            <ScholarshipBenefits scholarship={scholarship} />
+            <Reveal>
+              <ScholarshipBenefits scholarship={scholarship} />
+            </Reveal>
 
-            <ScholarshipEligibility scholarship={scholarship} />
+            <Reveal delay={0.05}>
+              <ScholarshipEligibility scholarship={scholarship} />
+            </Reveal>
 
-            <ScholarshipTeachers scholarship={scholarship} />
+            <Reveal delay={0.05}>
+              <ScholarshipTeachers scholarship={scholarship} />
+            </Reveal>
 
-            <ScholarshipDocuments scholarship={scholarship} />
+            <Reveal delay={0.05}>
+              <ScholarshipDocuments scholarship={scholarship} />
+            </Reveal>
 
-            <ScholarshipSelectionProcess scholarship={scholarship} />
+            <Reveal delay={0.05}>
+              <ScholarshipSelectionProcess scholarship={scholarship} />
+            </Reveal>
           </div>
 
           <div className="lg:col-span-4">
-            <ScholarshipSidebar />
+            <Reveal>
+              <ScholarshipSidebar />
+            </Reveal>
           </div>
         </div>
       </Container>

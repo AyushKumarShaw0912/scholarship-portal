@@ -11,7 +11,7 @@ import { Container } from "./Container";
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t bg-muted/30">
+    <footer className="mt-20 border-t bg-muted/40 backdrop-blur-[2px]">
       <Container>
         <div className="grid gap-10 py-12 md:grid-cols-3">
           <div className="space-y-4">

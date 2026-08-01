@@ -61,22 +61,38 @@ export function StatusView({
 }: StatusViewProps) {
   return (
     <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-      <Icon className={cn("size-20", iconClassName)} />
+      <Icon className={cn("motion-enter size-20", iconClassName)} />
 
       {code ? (
         <>
-          <h1 className="mt-8 text-5xl font-bold">{code}</h1>
-          <h2 className={cn("mt-4 text-2xl font-semibold", titleClassName)}>
+          <h1 className="motion-enter motion-delay-1 mt-8 text-5xl font-bold">
+            {code}
+          </h1>
+          <h2
+            className={cn(
+              "motion-enter motion-delay-2 mt-4 text-2xl font-semibold",
+              titleClassName,
+            )}
+          >
             {title}
           </h2>
         </>
       ) : (
-        <h1 className={cn("mt-8 text-3xl font-bold", titleClassName)}>{title}</h1>
+        <h1
+          className={cn(
+            "motion-enter motion-delay-1 mt-8 text-3xl font-bold",
+            titleClassName,
+          )}
+        >
+          {title}
+        </h1>
       )}
 
-      <p className="mt-4 text-muted-foreground">{description}</p>
+      <p className="motion-enter motion-delay-3 mt-4 text-muted-foreground">
+        {description}
+      </p>
 
-      <div className="mt-8 flex gap-4">
+      <div className="motion-enter motion-delay-4 mt-8 flex gap-4">
         <ActionButton {...primaryAction} />
         <ActionButton {...secondaryAction} />
       </div>

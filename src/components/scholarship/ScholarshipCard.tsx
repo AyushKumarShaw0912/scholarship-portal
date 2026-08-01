@@ -20,7 +20,7 @@ interface ScholarshipCardProps {
 
 export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
   return (
-    <Card className="group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <Card className="motion-lift group relative flex h-full flex-col overflow-hidden bg-card/90 backdrop-blur-[2px]">
       <CardHeader>
         <CardTitle className="text-xl">
           <Link
@@ -41,7 +41,7 @@ export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
       <CardFooter className="relative z-10 flex items-center justify-between border-t pt-6">
         <Link
           href={`${ROUTES.SCHOLARSHIPS}/${scholarship.slug}`}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all group-hover:gap-3"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-[gap] duration-200 group-hover:gap-3"
         >
           {uiCopy.learnMore}
           <ArrowRight className="size-4" />

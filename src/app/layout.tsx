@@ -2,6 +2,7 @@ import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { defaultSEO } from "@/config/seo";
+import { ANIMATION } from "@/constants/animation";
 import "./globals.css";
 import { Navbar } from "@/layout/navbar";
 import { Footer } from "@/layout";
@@ -30,10 +31,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-motion={ANIMATION.ENABLED ? "on" : "off"}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+      <body className="min-h-screen font-sans text-foreground antialiased">
         <div className="flex min-h-screen flex-col">
           <Navbar />
 
