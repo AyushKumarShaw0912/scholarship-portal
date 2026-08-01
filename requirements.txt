@@ -1,8 +1,0 @@
-1.Reduce margin/padding in whole application
-2.Improve the design of mobile nav bar
-3.Dark Mode
-4.Increase code reusability and remove unused code.
-5.No harcode text -->everything must come from data
-6.Animations
-7.Design overview and changes
-8.Language
