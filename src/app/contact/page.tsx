@@ -25,7 +25,7 @@ export default function ContactPage() {
             description={heading.description}
           />
 
-          <div className="mx-auto mt-8 grid max-w-4xl gap-6 md:grid-cols-2">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {infoItems.map((item) => {
               const Icon = item.icon;
 
@@ -41,6 +41,13 @@ export default function ContactPage() {
                       className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
                     >
                       {siteConfig.email}
+                    </a>
+                  ) : item.type === "phone" ? (
+                    <a
+                      href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
+                      className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {siteConfig.phone}
                     </a>
                   ) : (
                     <p className="mt-4 text-muted-foreground">

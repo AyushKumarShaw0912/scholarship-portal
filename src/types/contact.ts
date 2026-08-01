@@ -6,7 +6,7 @@ export interface ContactInfoItem {
   readonly id: string;
   readonly title: string;
   readonly icon: LucideIcon;
-  readonly type: "email" | "address";
+  readonly type: "email" | "phone" | "address";
   readonly lines?: readonly string[];
 }
 

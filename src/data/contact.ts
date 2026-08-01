@@ -1,4 +1,4 @@
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import type { ContactContent } from "@/types/contact";
 
@@ -20,6 +20,12 @@ export const contactContent = {
       title: "Email",
       icon: Mail,
       type: "email",
+    },
+    {
+      id: "phone",
+      title: "Phone",
+      icon: Phone,
+      type: "phone",
     },
     {
       id: "address",
