@@ -19,4 +19,7 @@ export const uiCopy = {
   openNavMenu: "Open Navigation Menu",
   scholarshipProgram: "Scholarship Program",
   scholarshipNotFound: "Scholarship Not Found",
+  switchToDarkMode: "Switch to dark mode",
+  switchToLightMode: "Switch to light mode",
+  toggleColorTheme: "Toggle color theme",
 } as const satisfies UiCopy;

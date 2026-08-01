@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { navigation, siteConfig } from "@/config";
 
 import { ApplyButton } from "@/components/actions/ApplyButton";
+import { ThemeToggle } from "@/components/actions/ThemeToggle";
 import { Container, Brand } from "@/layout";
 import { useScroll } from "@/hooks";
 import { cn } from "@/lib/utils";
@@ -32,7 +33,9 @@ export function Navbar() {
 
           <DesktopNav pathname={pathname} items={navigation} />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
+
             <ApplyButton
               href={siteConfig.applyUrl}
               className="hidden lg:inline-flex"

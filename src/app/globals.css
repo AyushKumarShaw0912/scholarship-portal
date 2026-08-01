@@ -51,6 +51,7 @@
 :root {
   /* Layout */
   --radius: 0.875rem;
+  color-scheme: light;
 
   /* Motion — durations sync with `constants/animation.ts` */
   --motion-duration: 450ms;
@@ -114,6 +115,8 @@
 }
 
 .dark {
+  color-scheme: dark;
+
   --background: oklch(0.18 0.01 255);
   --foreground: oklch(0.97 0.003 255);
 

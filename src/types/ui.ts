@@ -22,4 +22,7 @@ export interface UiCopy {
   readonly openNavMenu: string;
   readonly scholarshipProgram: string;
   readonly scholarshipNotFound: string;
+  readonly switchToDarkMode: string;
+  readonly switchToLightMode: string;
+  readonly toggleColorTheme: string;
 }

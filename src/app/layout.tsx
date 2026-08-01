@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { defaultSEO } from "@/config/seo";
 import { ANIMATION } from "@/constants/animation";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import "./globals.css";
 import { Navbar } from "@/layout/navbar";
 import { Footer } from "@/layout";
@@ -20,7 +21,10 @@ const geistMono = Geist_Mono({
 export const metadata = defaultSEO;
 
 export const viewport: Viewport = {
-  themeColor: "#2563eb",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#2563eb" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e3a5f" },
+  ],
 };
 
 export default function RootLayout({
@@ -36,13 +40,20 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen font-sans text-foreground antialiased">
-        <div className="flex min-h-screen flex-col">
-          <Navbar />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
 
-          <main className="flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
 
-          <Footer />
-        </div>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

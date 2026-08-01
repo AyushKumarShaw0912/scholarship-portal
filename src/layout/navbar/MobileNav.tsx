@@ -7,6 +7,7 @@ import { Menu, ChevronRight, Sparkles } from "lucide-react";
 import type { NavigationItem } from "@/types";
 
 import { ApplyButton } from "@/components/actions/ApplyButton";
+import { ThemeToggle } from "@/components/actions/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -43,8 +44,11 @@ export function MobileNav({ pathname, items, applyUrl }: MobileNavProps) {
 
         <SheetContent side="right" className="w-[340px] p-0 sm:w-[380px]">
           <div className="flex h-full flex-col">
-            <div className="border-b px-6 py-6">
-              <h2 className="mt-2 text-xl font-bold">Scholarship Portal</h2>
+            <div className="border-b px-6 py-6 pr-14">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-xl font-bold">Scholarship Portal</h2>
+                <ThemeToggle />
+              </div>
               <p className="mt-1 text-sm text-muted-foreground">
                 Explore pages and discover opportunities.
               </p>
