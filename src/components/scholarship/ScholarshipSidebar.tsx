@@ -1,10 +1,14 @@
-import { siteConfig } from "@/config";
-import { scholarshipPageContent, uiCopy } from "@/data";
+import { uiCopy } from "@/data";
+import { getScholarshipPageContent, getSiteSettings } from "@/lib/cms";
 import { ContentCard } from "@/components/common/ContentCard";
 import { CtaLink } from "@/components/actions/CtaLink";
 
-export function ScholarshipSidebar() {
-  const { sidebar } = scholarshipPageContent.detail;
+export async function ScholarshipSidebar() {
+  const [{ detail }, site] = await Promise.all([
+    getScholarshipPageContent(),
+    getSiteSettings(),
+  ]);
+  const { sidebar } = detail;
 
   return (
     <aside className="lg:sticky lg:top-28">
@@ -29,7 +33,7 @@ export function ScholarshipSidebar() {
         </div>
 
         <CtaLink
-          href={siteConfig.applyUrl}
+          href={site.applyUrl}
           label={uiCopy.applyNow}
           appearance="sidebar"
           external

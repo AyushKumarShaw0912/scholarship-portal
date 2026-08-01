@@ -1,12 +1,12 @@
-import { homeContent } from "@/data";
+import { getHomeContent } from "@/lib/cms";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { FeatureCard } from "@/components/common/FeatureCard";
 import { Reveal } from "../common/Reveal";
 
-export function Benefits() {
-  const { benefits, sections } = homeContent;
+export async function Benefits() {
+  const { benefits, sections } = await getHomeContent();
 
   return (
     <Section spacing="lg">

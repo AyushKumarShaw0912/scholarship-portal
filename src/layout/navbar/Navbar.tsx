@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
-import { navigation, siteConfig } from "@/config";
+import type { NavigationItem, SiteSettings } from "@/types";
 
 import { ApplyButton } from "@/components/actions/ApplyButton";
 import { ThemeToggle } from "@/components/actions/ThemeToggle";
@@ -13,9 +13,13 @@ import { cn } from "@/lib/utils";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 
-export function Navbar() {
-  const pathname = usePathname();
+interface NavbarProps {
+  readonly site: SiteSettings;
+  readonly navigation: readonly NavigationItem[];
+}
 
+export function Navbar({ site, navigation }: NavbarProps) {
+  const pathname = usePathname();
   const { isScrolled } = useScroll();
 
   return (
@@ -29,7 +33,7 @@ export function Navbar() {
     >
       <Container>
         <div className="flex h-[4.5rem] items-center justify-between">
-          <Brand />
+          <Brand shortName={site.shortName} tagline={site.tagline} />
 
           <DesktopNav pathname={pathname} items={navigation} />
 
@@ -37,14 +41,14 @@ export function Navbar() {
             <ThemeToggle />
 
             <ApplyButton
-              href={siteConfig.applyUrl}
+              href={site.applyUrl}
               className="hidden lg:inline-flex"
             />
 
             <MobileNav
               pathname={pathname}
               items={navigation}
-              applyUrl={siteConfig.applyUrl}
+              applyUrl={site.applyUrl}
             />
           </div>
         </div>

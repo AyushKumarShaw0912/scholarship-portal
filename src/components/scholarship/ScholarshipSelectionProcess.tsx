@@ -1,6 +1,6 @@
 import type { Scholarship } from "@/types";
 
-import { scholarshipPageContent } from "@/data";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { NumberedStepList } from "@/components/common/NumberedStepList";
 
@@ -8,13 +8,15 @@ interface ScholarshipSelectionProcessProps {
   readonly scholarship: Scholarship;
 }
 
-export function ScholarshipSelectionProcess({
+export async function ScholarshipSelectionProcess({
   scholarship,
 }: ScholarshipSelectionProcessProps) {
+  const pageContent = await getScholarshipPageContent();
+
   return (
     <div>
       <SectionHeading
-        title={scholarshipPageContent.detail.sectionTitles.selectionProcess}
+        title={pageContent.detail.sectionTitles.selectionProcess}
         align="left"
       />
 

@@ -1,9 +1,9 @@
-import { scholarshipPageContent } from "@/data";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container, Section } from "@/layout";
 
-export function ScholarshipHero() {
-  const { list } = scholarshipPageContent;
+export async function ScholarshipHero() {
+  const { list } = await getScholarshipPageContent();
 
   return (
     <Section spacing="lg">

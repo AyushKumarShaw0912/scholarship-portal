@@ -1,12 +1,14 @@
-import { homeContent } from "@/data";
-import { siteConfig } from "@/config";
+import { getHomeContent, getSiteSettings } from "@/lib/cms";
 import { ROUTES } from "@/constants/routes";
 import { Container, Section } from "@/layout";
 import { StatCard } from "@/components/common/StatCard";
 import { CtaLink } from "@/components/actions/CtaLink";
 
-export function Hero() {
-  const { hero } = homeContent;
+export async function Hero() {
+  const [{ hero }, site] = await Promise.all([
+    getHomeContent(),
+    getSiteSettings(),
+  ]);
 
   return (
     <Section spacing="lg">
@@ -28,7 +30,7 @@ export function Hero() {
 
           <div className="motion-enter motion-delay-3 mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <CtaLink
-              href={siteConfig.applyUrl}
+              href={site.applyUrl}
               label={hero.primaryCta}
               appearance="hero"
               external

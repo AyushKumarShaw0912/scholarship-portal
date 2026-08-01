@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 interface BrandProps {
   readonly className?: string;
+  readonly shortName: string;
+  readonly tagline: string;
 }
 
-export function Brand({ className }: BrandProps) {
+export function Brand({ className, shortName, tagline }: BrandProps) {
   return (
     <Link
       href="/"
@@ -22,13 +23,9 @@ export function Brand({ className }: BrandProps) {
       </div>
 
       <div className="flex flex-col">
-        <span className="text-lg font-bold tracking-tight">
-          {siteConfig.shortName}
-        </span>
+        <span className="text-lg font-bold tracking-tight">{shortName}</span>
 
-        <span className="text-xs text-muted-foreground">
-          {siteConfig.tagline}
-        </span>
+        <span className="text-xs text-muted-foreground">{tagline}</span>
       </div>
     </Link>
   );

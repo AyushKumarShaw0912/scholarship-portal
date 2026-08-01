@@ -1,20 +1,30 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config";
-import { contactContent } from "@/data";
+import { getContactContent, getSiteSettings } from "@/lib/cms";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Reveal } from "@/components/common/Reveal";
 import { ContentCard } from "@/components/common/ContentCard";
 
-export const metadata: Metadata = {
-  title: `${contactContent.meta.title} | ${siteConfig.name}`,
-  description: contactContent.meta.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [contact, site] = await Promise.all([
+    getContactContent(),
+    getSiteSettings(),
+  ]);
 
-export default function ContactPage() {
-  const { heading, infoItems, enquiry } = contactContent;
+  return {
+    title: `${contact.meta.title} | ${site.name}`,
+    description: contact.meta.description,
+  };
+}
+
+export default async function ContactPage() {
+  const [contact, site] = await Promise.all([
+    getContactContent(),
+    getSiteSettings(),
+  ]);
+  const { heading, infoItems, enquiry } = contact;
 
   return (
     <Section spacing="lg">
@@ -37,17 +47,17 @@ export default function ContactPage() {
 
                   {item.type === "email" ? (
                     <a
-                      href={`mailto:${siteConfig.email}`}
+                      href={`mailto:${site.email}`}
                       className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
                     >
-                      {siteConfig.email}
+                      {site.email}
                     </a>
                   ) : item.type === "phone" ? (
                     <a
-                      href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
+                      href={`tel:${site.phone.replace(/\D/g, "")}`}
                       className="mt-4 block text-muted-foreground transition-colors hover:text-primary"
                     >
-                      {siteConfig.phone}
+                      {site.phone}
                     </a>
                   ) : (
                     <p className="mt-4 text-muted-foreground">
