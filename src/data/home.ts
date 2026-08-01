@@ -1,4 +1,4 @@
-import { Award, BookOpen, GraduationCap, Users } from "lucide-react";
+import { Award, BookOpen, Brain, GraduationCap, Users } from "lucide-react";
 
 import type { HomeContent } from "@/types";
 
@@ -14,7 +14,7 @@ export const homeContent = {
     highlightedTitle: "Science Scholars",
 
     description:
-      "Full coaching scholarships for deserving students. Build your future through expert faculty, complete tuition support and career guidance.",
+      "Full coaching scholarships for meritorious students. Build your future through expert faculty, complete tuition support and career guidance.",
 
     primaryCta: uiCopy.applyNow,
 
@@ -60,7 +60,8 @@ export const homeContent = {
     {
       title: "100% Tuition Support",
 
-      description: "Complete coaching fees covered for selected students.",
+      description:
+        "Full tution and coaching fees support for Class XI and XII science students for 3 subjects (PCM/PCB)",
 
       icon: Award,
     },
@@ -73,6 +74,14 @@ export const homeContent = {
 
       icon: BookOpen,
     },
+    {
+      title: "Preparation for competitive exams (JEE and NEET)",
+
+      description:
+        "Prepare for competitive exams like JEE and NEET with expert faculty.",
+
+      icon: Brain,
+    },
 
     {
       title: "Career Guidance",
@@ -84,10 +93,10 @@ export const homeContent = {
     },
 
     {
-      title: "Merit Based Selection",
+      title: "Merit+ Financial Need Based Selection",
 
       description:
-        "Students are selected through a fair scholarship examination.",
+        "Students are selected based on their academic performances for last 3 years, financial need, a selection test, and interviews.",
 
       icon: Users,
     },

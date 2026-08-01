@@ -9,7 +9,7 @@ export const scholarships: Scholarship[] = [
     title: "Fazil Science Scholarship for Girls",
 
     shortDescription:
-      "Full scholarship for girls pursuing Science in Classes 11 and 12 with preparation for competitive entrance examinations.",
+      "Full tution and coaching scholarship for girls pursuing science in Class 11 and 12 for 3 subjects (PCM/PCB) including preparation for competitive entrance examinations (JEE and NEET)",
 
     description:
       "The Fazil Science Scholarship for Girls supports academically promising female students by covering the complete tuition fees for science coaching and providing career guidance for higher education.",
@@ -19,9 +19,9 @@ export const scholarships: Scholarship[] = [
     isActive: true,
 
     eligibility: [
-      "Girl student",
-      "Completed Class 10",
-      "Taking admission in Class 11 (Science)",
+      "Female student",
+      "Passed Class 10",
+      "Class 11 (Science) student",
       "Must qualify the scholarship selection examination",
     ],
 
@@ -98,10 +98,10 @@ export const scholarships: Scholarship[] = [
     title: "Shaw Foundation for Future Science Scholars",
 
     shortDescription:
-      "Supporting talented students pursuing science education through complete coaching support and mentorship.",
+      "Supporting talented students pursuing science education with full scholarship for tution and coaching for Class 11 and 12 for 3 subjects (PCM/PCB) including preparation for competitive entrance examinations (JEE and NEET)",
 
     description:
-      "The Shaw Foundation for Future Science Scholars aims to help deserving students prepare for engineering and medical entrance examinations by providing complete coaching support and academic guidance.",
+      "The Shaw Foundation for Future Science Scholars aims to help meritorious students prepare for engineering and medical entrance examinations by providing complete coaching support and academic guidance.",
 
     applyUrl: "https://forms.google.com/YOUR_FORM_LINK",
 

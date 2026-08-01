@@ -4,7 +4,7 @@ export const aboutContent = {
   meta: {
     title: "About",
     description:
-      "Learn about our mission to support deserving students through science scholarships.",
+      "Learn about our mission to support meritorious students through science scholarships.",
   },
 
   heading: {
@@ -15,7 +15,7 @@ export const aboutContent = {
   sections: [
     {
       title: "Our Mission",
-      body: "We believe that financial limitations should never prevent talented students from pursuing quality science education. Through our scholarship programs, we aim to support deserving students preparing for engineering and medical entrance examinations.",
+      body: "We believe that financial limitations should never be a barrier to talented students from pursuing quality science education. Through our scholarship programs, we aim to support meritorious students preparing for engineering and medical entrance examinations.",
     },
     {
       title: "What We Offer",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 
 import { navigation, siteConfig } from "@/config";
 import { uiCopy } from "@/data";
@@ -51,13 +51,25 @@ export function Footer() {
           <div>
             <h3 className="mb-4 font-semibold">{uiCopy.contact}</h3>
 
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-            >
-              <Mail className="size-4" />
-              {siteConfig.email}
-            </a>
+            <div className="flex flex-col gap-3">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                <Mail className="size-4" />
+                {siteConfig.email}
+              </a>
+
+              <a
+                href={`https://wa.me/${siteConfig.phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                <MessageCircle className="size-4" />
+                {siteConfig.phone}
+              </a>
+            </div>
           </div>
         </div>
 

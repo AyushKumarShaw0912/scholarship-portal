@@ -12,9 +12,9 @@ export const siteConfig = {
 
   favicon: "/favicon.ico",
 
-  email: "support@example.com",
+  email: "futuresciencescholars@gmail.com",
 
-  phone: "+91-0000000000",
+  phone: "9230888155",
 
   address: "India",
 
