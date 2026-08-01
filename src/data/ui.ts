@@ -22,4 +22,5 @@ export const uiCopy = {
   switchToDarkMode: "Switch to dark mode",
   switchToLightMode: "Switch to light mode",
   toggleColorTheme: "Toggle color theme",
+  viewAllFaqs: "View all FAQs",
 } as const satisfies UiCopy;

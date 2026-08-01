@@ -5,4 +5,5 @@ export * from "./home";
 export * from "./ui";
 export * from "./about";
 export * from "./contact";
+export * from "./faq";
 export * from "./system";

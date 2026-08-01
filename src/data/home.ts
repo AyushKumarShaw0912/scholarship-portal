@@ -54,6 +54,10 @@ export const homeContent = {
       title: "Application Process",
       description: "A simple four-step process to apply.",
     },
+    faqs: {
+      title: "Frequently Asked Questions",
+      description: "Common questions about eligibility and scholarship coverage.",
+    },
   },
 
   benefits: [

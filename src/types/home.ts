@@ -35,6 +35,7 @@ export interface HomeContent {
     readonly scholarships: SectionCopy;
     readonly benefits: SectionCopy;
     readonly applicationProcess: SectionCopy;
+    readonly faqs: SectionCopy;
   };
 
   readonly benefits: readonly BenefitItem[];

@@ -4,7 +4,7 @@ import { siteConfig } from "@/config";
 import { scholarships } from "@/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/about", "/contact", "/scholarships"];
+  const routes = ["", "/about", "/contact", "/scholarships", "/faq"];
 
   const pages = routes.map((route) => ({
     url: `${siteConfig.url}${route}`,

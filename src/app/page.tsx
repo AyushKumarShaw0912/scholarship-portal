@@ -1,6 +1,7 @@
 import { ApplicationProcess } from "@/components/home/ApplicationProcess";
 import { Benefits } from "@/components/home/Benefits";
 import { Hero } from "@/components/home/Hero";
+import { HomeFaqs } from "@/components/home/HomeFaqs";
 import { ScholarshipOverview } from "@/components/home/ScholarshipOverview";
 
 export default function HomePage() {
@@ -13,6 +14,8 @@ export default function HomePage() {
       <Benefits />
 
       <ApplicationProcess />
+
+      <HomeFaqs />
     </>
   );
 }

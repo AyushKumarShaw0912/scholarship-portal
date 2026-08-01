@@ -14,6 +14,10 @@ export const navigation = [
     href: ROUTES.ABOUT,
   },
   {
+    title: "FAQs",
+    href: ROUTES.FAQ,
+  },
+  {
     title: "Contact",
     href: ROUTES.CONTACT,
   },

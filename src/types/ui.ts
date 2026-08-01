@@ -25,4 +25,5 @@ export interface UiCopy {
   readonly switchToDarkMode: string;
   readonly switchToLightMode: string;
   readonly toggleColorTheme: string;
+  readonly viewAllFaqs: string;
 }
