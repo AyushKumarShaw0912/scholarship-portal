@@ -25,7 +25,7 @@ export default function FaqPage() {
             description={heading.description}
           />
 
-          <FaqList items={items} className="mx-auto mt-12 max-w-4xl" />
+          <FaqList items={items} className="mx-auto mt-8 max-w-4xl" />
         </Reveal>
       </Container>
     </Section>

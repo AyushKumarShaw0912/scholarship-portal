@@ -18,7 +18,7 @@ export function ScholarshipEligibility({
         align="left"
       />
 
-      <div className="mt-10">
+      <div className="mt-8">
         <Checklist items={scholarship.eligibility} />
       </div>
     </div>

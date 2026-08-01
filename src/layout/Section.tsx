@@ -9,9 +9,9 @@ interface SectionProps extends ComponentPropsWithoutRef<"section"> {
 }
 
 const spacingClasses = {
-  sm: "py-12",
-  md: "py-16",
-  lg: "py-20",
+  sm: "py-8",
+  md: "py-10",
+  lg: "py-12",
 } as const;
 
 export function Section({

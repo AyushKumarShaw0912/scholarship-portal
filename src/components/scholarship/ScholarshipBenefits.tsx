@@ -18,10 +18,10 @@ export function ScholarshipBenefits({ scholarship }: ScholarshipBenefitsProps) {
         align="left"
       />
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
         {scholarship.benefits.map((benefit) => (
-          <ContentCard key={benefit.id} hover="lift" className="p-6">
-            <div className="flex items-start gap-4">
+          <ContentCard key={benefit.id} hover="lift" className="p-5">
+            <div className="flex items-start gap-3">
               <CheckCircle2 className="mt-1 size-5 text-primary" />
 
               <div>

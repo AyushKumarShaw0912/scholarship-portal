@@ -17,7 +17,7 @@ export function ApplicationProcess() {
             description={sections.applicationProcess.description}
           />
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {applicationSteps.map((step, index) => (
               <StepCard
                 key={step.title}

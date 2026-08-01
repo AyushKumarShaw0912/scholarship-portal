@@ -10,7 +10,7 @@ export function StatCard({ value, label }: StatCardProps) {
     <ContentCard
       as="div"
       hover="shadow"
-      className="p-6 text-center shadow-sm"
+      className="p-5 text-center shadow-sm"
     >
       <h3 className="text-3xl font-bold text-primary">{value}</h3>
 

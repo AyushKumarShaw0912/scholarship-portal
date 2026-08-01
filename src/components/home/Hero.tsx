@@ -26,7 +26,7 @@ export function Hero() {
             {hero.description}
           </p>
 
-          <div className="motion-enter motion-delay-3 mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="motion-enter motion-delay-3 mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <CtaLink
               href={siteConfig.applyUrl}
               label={hero.primaryCta}
@@ -41,7 +41,7 @@ export function Hero() {
             />
           </div>
 
-          <div className="motion-enter motion-delay-4 mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="motion-enter motion-delay-4 mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {hero.stats.map((stat) => (
               <StatCard
                 key={stat.label}

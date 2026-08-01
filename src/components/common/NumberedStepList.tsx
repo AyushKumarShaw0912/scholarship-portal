@@ -6,9 +6,9 @@ interface NumberedStepListProps {
 
 export function NumberedStepList({ steps }: NumberedStepListProps) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {steps.map((step, index) => (
-        <ContentCard key={step} hover="shadow" className="flex gap-5 p-6">
+        <ContentCard key={step} hover="shadow" className="flex gap-4 p-5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">
             {index + 1}
           </div>

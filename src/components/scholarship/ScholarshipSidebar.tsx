@@ -8,14 +8,14 @@ export function ScholarshipSidebar() {
 
   return (
     <aside className="lg:sticky lg:top-28">
-      <ContentCard as="div" hover="shadow" className="p-6 shadow-sm">
+      <ContentCard as="div" hover="shadow" className="p-5 shadow-sm">
         <h2 className="text-xl font-semibold">{sidebar.title}</h2>
 
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
           {sidebar.description}
         </p>
 
-        <div className="mt-8 space-y-5">
+        <div className="mt-6 space-y-4">
           {sidebar.features.map((feature) => {
             const Icon = feature.icon;
 
@@ -34,10 +34,10 @@ export function ScholarshipSidebar() {
           appearance="sidebar"
           external
           showExternalIcon
-          className="mt-8"
+          className="mt-6"
         />
 
-        <p className="mt-6 text-xs leading-6 text-muted-foreground">
+        <p className="mt-4 text-xs leading-6 text-muted-foreground">
           {sidebar.footerNote}
         </p>
       </ContentCard>

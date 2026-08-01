@@ -18,8 +18,8 @@ export function ScholarshipDetails({ scholarship }: ScholarshipDetailsProps) {
   return (
     <Section spacing="lg">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="space-y-16 lg:col-span-8">
+        <div className="grid gap-8 lg:grid-cols-12">
+          <div className="space-y-10 lg:col-span-8">
             <Reveal>
               <ScholarshipBenefits scholarship={scholarship} />
             </Reveal>

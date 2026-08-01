@@ -24,7 +24,7 @@ export default function AboutPage() {
             description={heading.description}
           />
 
-          <div className="mx-auto mt-12 max-w-4xl space-y-8 text-muted-foreground">
+          <div className="mx-auto mt-8 max-w-4xl space-y-6 text-muted-foreground">
             {sections.map((section) => (
               <section key={section.title}>
                 <h2 className="mb-3 text-xl font-semibold text-foreground">

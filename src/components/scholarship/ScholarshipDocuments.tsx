@@ -20,10 +20,10 @@ export function ScholarshipDocuments({
         align="left"
       />
 
-      <ContentCard as="div" className="mt-10 p-8">
-        <div className="space-y-6">
+      <ContentCard as="div" className="mt-8 p-6">
+        <div className="space-y-5">
           {scholarship.requiredDocuments.map((document) => (
-            <div key={document.id} className="flex items-start gap-4">
+            <div key={document.id} className="flex items-start gap-3">
               {document.required ? (
                 <CheckCircle2 className="mt-1 size-5 text-primary" />
               ) : (

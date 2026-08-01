@@ -14,7 +14,7 @@ export function ScholarshipList({
   className,
 }: ScholarshipListProps) {
   return (
-    <div className={cn("grid gap-8", className)}>
+    <div className={cn("grid gap-6", className)}>
       {scholarships.map((scholarship) => (
         <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
       ))}

@@ -20,9 +20,9 @@ export function HomeFaqs() {
             description={sections.faqs.description}
           />
 
-          <FaqList items={items} className="mx-auto mt-12 max-w-4xl" />
+          <FaqList items={items} className="mx-auto mt-8 max-w-4xl" />
 
-          <div className="mt-10 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <CtaLink
               href={ROUTES.FAQ}
               label={uiCopy.viewAllFaqs}

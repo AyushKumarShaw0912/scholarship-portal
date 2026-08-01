@@ -19,7 +19,7 @@ export function ScholarshipOverview() {
 
           <ScholarshipList
             scholarships={scholarships}
-            className="mt-12 lg:grid-cols-2"
+            className="mt-8 lg:grid-cols-2"
           />
         </Reveal>
       </Container>

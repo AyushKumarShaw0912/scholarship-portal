@@ -6,9 +6,9 @@ export const UI = {
   FOOTER_HEIGHT: "5rem",
 
   SECTION_PADDING: {
-    SM: "py-12",
-    MD: "py-16",
-    LG: "py-24",
+    SM: "py-8",
+    MD: "py-10",
+    LG: "py-12",
   },
 
   GRID: {

@@ -18,7 +18,7 @@ export function ScholarshipSelectionProcess({
         align="left"
       />
 
-      <div className="mt-10">
+      <div className="mt-8">
         <NumberedStepList steps={scholarship.selectionProcess} />
       </div>
     </div>

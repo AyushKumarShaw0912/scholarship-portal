@@ -16,9 +16,9 @@ export function ScholarshipTeachers({ scholarship }: ScholarshipTeachersProps) {
         align="left"
       />
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {scholarship.teachers.map((teacher) => (
-          <ContentCard key={teacher.subject} hover="lift" className="p-6">
+          <ContentCard key={teacher.subject} hover="lift" className="p-5">
             <p className="text-sm text-muted-foreground">{teacher.subject}</p>
 
             <h3 className="mt-2 font-semibold">{teacher.name}</h3>

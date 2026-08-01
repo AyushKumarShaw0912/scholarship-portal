@@ -17,7 +17,7 @@ export function Benefits() {
             description={sections.benefits.description}
           />
 
-          <div className="mt-14 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {benefits.map((benefit) => (
               <FeatureCard
                 key={benefit.title}

@@ -25,12 +25,12 @@ export default function ContactPage() {
             description={heading.description}
           />
 
-          <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-6 md:grid-cols-2">
             {infoItems.map((item) => {
               const Icon = item.icon;
 
               return (
-                <ContentCard key={item.id} hover="lift" className="p-8">
+                <ContentCard key={item.id} hover="lift" className="p-6">
                   <Icon className="mb-4 size-6 text-primary" />
 
                   <h2 className="text-xl font-semibold">{item.title}</h2>
@@ -60,7 +60,7 @@ export default function ContactPage() {
           <ContentCard
             as="div"
             hover="shadow"
-            className="mx-auto mt-12 max-w-4xl p-8"
+            className="mx-auto mt-8 max-w-4xl p-6"
           >
             <h2 className="text-xl font-semibold">{enquiry.title}</h2>
 

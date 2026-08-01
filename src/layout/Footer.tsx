@@ -11,9 +11,9 @@ import { Container } from "./Container";
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t bg-muted/40 backdrop-blur-[2px]">
+    <footer className="mt-12 border-t bg-muted/40 backdrop-blur-[2px]">
       <Container>
-        <div className="grid gap-10 py-12 md:grid-cols-3">
+        <div className="grid gap-8 py-10 md:grid-cols-3">
           <div className="space-y-4">
             <Brand />
 
@@ -73,7 +73,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t py-6 text-sm text-muted-foreground md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t py-5 text-sm text-muted-foreground md:flex-row">
           <p>{siteConfig.copyright}</p>
         </div>
       </Container>
