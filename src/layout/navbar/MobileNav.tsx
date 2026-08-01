@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, ChevronRight, Sparkles } from "lucide-react";
 
 import type { NavigationItem } from "@/types";
 
@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { uiCopy } from "@/data";
+import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
   readonly pathname: string;
@@ -28,38 +29,87 @@ export function MobileNav({ pathname, items, applyUrl }: MobileNavProps) {
   return (
     <div className="lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger>
-          <Button variant="ghost" size="icon" aria-label={uiCopy.openNavMenu}>
-            <Menu className="size-5" />
-          </Button>
+        <SheetTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={uiCopy.openNavMenu}
+            />
+          }
+        >
+          <Menu className="size-5" />
         </SheetTrigger>
 
-        <SheetContent side="right" className="flex flex-col">
-          <nav className="mt-10 flex flex-col gap-2">
-            {items.map((item) => {
-              const active =
-                pathname === item.href ||
-                (item.href !== "/" && pathname.startsWith(item.href));
+        <SheetContent side="right" className="w-[340px] p-0 sm:w-[380px]">
+          <div className="flex h-full flex-col">
+            <div className="border-b px-6 py-6">
+              <h2 className="mt-2 text-xl font-bold">Scholarship Portal</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Explore pages and discover opportunities.
+              </p>
+            </div>
 
-              return (
-                <SheetClose key={item.href}>
-                  <Button
-                    variant={active ? "secondary" : "ghost"}
-                    className="justify-start"
+            {/* Navigation */}
+            <nav className="flex-1 space-y-2 overflow-y-auto px-4 py-6">
+              {items.map((item) => {
+                const active =
+                  pathname === item.href ||
+                  (item.href !== "/" && pathname.startsWith(item.href));
+
+                return (
+                  <SheetClose
+                    key={item.href}
+                    render={<Link href={item.href} />}
                   >
-                    <Link href={item.href}>{item.title}</Link>
-                  </Button>
-                </SheetClose>
-              );
-            })}
-          </nav>
+                    <div
+                      className={cn(
+                        "group flex h-12 items-center justify-between rounded-xl px-4 transition-all duration-200",
+                        active
+                          ? "bg-primary text-primary-foreground shadow-md"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                      )}
+                    >
+                      <span className="font-medium">{item.title}</span>
 
-          <div className="mt-auto pt-6">
-            <SheetClose>
-              <div>
-                <ApplyButton href={applyUrl} className="w-full" />
+                      <ChevronRight
+                        className={cn(
+                          "size-4 transition-transform duration-200",
+                          active ? "" : "group-hover:translate-x-1",
+                        )}
+                      />
+                    </div>
+                  </SheetClose>
+                );
+              })}
+            </nav>
+
+            {/* Bottom CTA */}
+            <div className="border-t p-5">
+              <div className="rounded-2xl border bg-muted/50 p-5 backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <div className="rounded-full bg-primary/10 p-2">
+                    <Sparkles className="size-4 text-primary" />
+                  </div>
+
+                  <h3 className="font-semibold">Ready to apply?</h3>
+                </div>
+
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Start your scholarship journey today and discover
+                  opportunities tailored for you.
+                </p>
+
+                <div className="mt-5">
+                  <SheetClose render={<div className="w-full" />}>
+                    <ApplyButton
+                      href={applyUrl}
+                      className="w-full justify-center"
+                    />
+                  </SheetClose>
+                </div>
               </div>
-            </SheetClose>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
