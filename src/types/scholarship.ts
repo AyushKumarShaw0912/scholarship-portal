@@ -11,8 +11,6 @@ export interface Scholarship {
 
   description: string;
 
-  applyUrl: string;
-
   isActive: boolean;
 
   eligibility: string[];

@@ -21,7 +21,7 @@ export const siteConfig = {
   address: "India",
 
   copyright: `© ${new Date().getFullYear()} Scholarship Portal. All rights reserved.`,
-  applyUrl: process.env.NEXT_PUBLIC_APPLY_URL ?? "https://example.com/apply",
+  applyUrl: "/apply",
   tagline: "Empowering Future Scientists",
 
   locale: "en-IN",

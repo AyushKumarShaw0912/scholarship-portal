@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     scholarships: Scholarship;
+    applications: Application;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     scholarships: ScholarshipsSelect<false> | ScholarshipsSelect<true>;
+    applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -205,7 +207,6 @@ export interface Scholarship {
   slug: string;
   shortDescription: string;
   description: string;
-  applyUrl: string;
   isActive?: boolean | null;
   eligibility: {
     value: string;
@@ -246,6 +247,30 @@ export interface Scholarship {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications".
+ */
+export interface Application {
+  id: number;
+  fullName: string;
+  target: 'jee' | 'neet';
+  class10BoardMarksheet: number | Media;
+  class10PreBoardMarksheet: number | Media;
+  class8Marksheet: number | Media;
+  class9Marksheet: number | Media;
+  academicAchievements?: string | null;
+  address: string;
+  parentsName: string;
+  parentsProfession: string;
+  /**
+   * Whole number amount in INR
+   */
+  householdIncome: number;
+  status: 'new' | 'reviewed' | 'shortlisted' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -279,6 +304,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scholarships';
         value: number | Scholarship;
+      } | null)
+    | ({
+        relationTo: 'applications';
+        value: number | Application;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -395,7 +424,6 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   slug?: T;
   shortDescription?: T;
   description?: T;
-  applyUrl?: T;
   isActive?: T;
   eligibility?:
     | T
@@ -443,6 +471,26 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications_select".
+ */
+export interface ApplicationsSelect<T extends boolean = true> {
+  fullName?: T;
+  target?: T;
+  class10BoardMarksheet?: T;
+  class10PreBoardMarksheet?: T;
+  class8Marksheet?: T;
+  class9Marksheet?: T;
+  academicAchievements?: T;
+  address?: T;
+  parentsName?: T;
+  parentsProfession?: T;
+  householdIncome?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -497,7 +545,10 @@ export interface Site {
   email: string;
   phone: string;
   address: string;
-  applyUrl: string;
+  /**
+   * Deprecated. Apply CTAs use the in-app /apply form. Leave blank.
+   */
+  applyUrl?: string | null;
   logo?: (number | null) | Media;
   favicon?: (number | null) | Media;
   locale: string;

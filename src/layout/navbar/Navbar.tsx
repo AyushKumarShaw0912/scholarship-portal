@@ -44,15 +44,11 @@ export function Navbar({ site, navigation }: NavbarProps) {
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
 
-            <ApplyButton
-              href={site.applyUrl}
-              className="hidden lg:inline-flex"
-            />
+            <ApplyButton className="hidden lg:inline-flex" />
 
             <MobileNav
               pathname={pathname}
               items={navigation}
-              applyUrl={site.applyUrl}
             />
           </div>
         </div>

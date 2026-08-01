@@ -1,4 +1,4 @@
-import type { Scholarship } from "@/types";
+﻿import type { Scholarship } from "@/types";
 
 export const scholarships: Scholarship[] = [
   {
@@ -13,8 +13,6 @@ export const scholarships: Scholarship[] = [
 
     description:
       "The Fazil Science Scholarship for Girls supports academically promising female students by covering the complete tuition fees for science coaching and providing career guidance for higher education.",
-
-    applyUrl: "https://forms.google.com/YOUR_FORM_LINK",
 
     isActive: true,
 
@@ -102,8 +100,6 @@ export const scholarships: Scholarship[] = [
 
     description:
       "The Shaw Foundation for Future Science Scholars aims to help meritorious students prepare for engineering and medical entrance examinations by providing complete coaching support and academic guidance.",
-
-    applyUrl: "https://forms.google.com/YOUR_FORM_LINK",
 
     isActive: true,
 

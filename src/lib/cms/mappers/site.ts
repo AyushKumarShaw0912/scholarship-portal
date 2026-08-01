@@ -68,7 +68,6 @@ export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
     !hasText(doc.email) ||
     !hasText(doc.phone) ||
     !hasText(doc.address) ||
-    !hasText(doc.applyUrl) ||
     !hasText(doc.author)
   ) {
     return null;
@@ -105,7 +104,7 @@ export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
     phone: doc.phone,
     address: doc.address,
     copyright: `© ${year} ${doc.name}. All rights reserved.`,
-    applyUrl: doc.applyUrl || getApplyUrl(),
+    applyUrl: getApplyUrl(),
     tagline: doc.tagline,
     locale: doc.locale || "en-IN",
     author: doc.author,
@@ -126,7 +125,7 @@ export function fromSiteSettings(
     email: site.email,
     phone: site.phone,
     address: site.address,
-    applyUrl: site.applyUrl || getApplyUrl(),
+    applyUrl: getApplyUrl(),
     locale: site.locale,
     author: site.author,
     keywords: toStringList([...site.keywords]),

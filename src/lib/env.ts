@@ -19,5 +19,5 @@ export function getAppUrl(): string {
 }
 
 export function getApplyUrl(): string {
-  return process.env.NEXT_PUBLIC_APPLY_URL ?? "https://example.com/apply";
+  return "/apply";
 }

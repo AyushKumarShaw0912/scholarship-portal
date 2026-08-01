@@ -4,7 +4,7 @@ import { Mail, MessageCircle } from "lucide-react";
 import type { NavigationItem, SiteSettings } from "@/types";
 
 import { uiCopy } from "@/data";
-import { Button } from "@/components/ui/button";
+import { ApplyButton } from "@/components/actions/ApplyButton";
 
 import { Brand } from "./Brand";
 import { Container } from "./Container";
@@ -30,15 +30,7 @@ export function Footer({ site, navigation }: FooterProps) {
               {site.description}
             </p>
 
-            <Button>
-              <Link
-                href={site.applyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {uiCopy.applyNow}
-              </Link>
-            </Button>
+            <ApplyButton />
           </div>
 
           <div>

@@ -51,7 +51,12 @@ export const Site: GlobalConfig = {
     {
       name: "applyUrl",
       type: "text",
-      required: true,
+      required: false,
+      admin: {
+        description:
+          "Deprecated. Apply CTAs use the in-app /apply form. Leave blank.",
+        position: "sidebar",
+      },
     },
     {
       name: "logo",

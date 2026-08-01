@@ -6,7 +6,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
-import { Media, Scholarships, Users } from "./collections";
+import { Media, Scholarships, Users, Applications } from "./collections";
 import {
   About,
   Contact,
@@ -29,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Scholarships],
+  collections: [Users, Media, Scholarships, Applications],
   globals: [Site, Home, About, Contact, Faq, ScholarshipPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "CHANGE_ME_IN_ENV_LOCAL",

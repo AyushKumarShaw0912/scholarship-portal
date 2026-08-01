@@ -21,10 +21,9 @@ import { cn } from "@/lib/utils";
 interface MobileNavProps {
   readonly pathname: string;
   readonly items: readonly NavigationItem[];
-  readonly applyUrl: string;
 }
 
-export function MobileNav({ pathname, items, applyUrl }: MobileNavProps) {
+export function MobileNav({ pathname, items }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -106,10 +105,7 @@ export function MobileNav({ pathname, items, applyUrl }: MobileNavProps) {
 
                 <div className="mt-5">
                   <SheetClose render={<div className="w-full" />}>
-                    <ApplyButton
-                      href={applyUrl}
-                      className="w-full justify-center"
-                    />
+                    <ApplyButton className="w-full justify-center" />
                   </SheetClose>
                 </div>
               </div>
