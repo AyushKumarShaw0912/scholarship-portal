@@ -5,6 +5,7 @@ import type { NavigationItem, SiteSettings } from "@/types";
 import { getPayloadClient } from "../client";
 import { withCmsFallback } from "../fallback";
 import { toSiteSettings } from "../mappers/site";
+import { publicReadOptions } from "../query";
 
 function staticSiteSettings(): SiteSettings {
   return {
@@ -34,6 +35,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       const doc = await payload.findGlobal({
         slug: "site",
         depth: 0,
+        ...publicReadOptions,
       });
 
       return toSiteSettings(doc);

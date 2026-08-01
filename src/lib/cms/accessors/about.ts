@@ -4,6 +4,7 @@ import type { AboutContent } from "@/types";
 import { getPayloadClient } from "../client";
 import { withCmsFallback } from "../fallback";
 import { toAboutContent } from "../mappers/about";
+import { publicReadOptions } from "../query";
 
 export async function getAboutContent(): Promise<AboutContent> {
   return withCmsFallback(
@@ -12,6 +13,7 @@ export async function getAboutContent(): Promise<AboutContent> {
       const doc = await payload.findGlobal({
         slug: "about",
         depth: 0,
+        ...publicReadOptions,
       });
 
       return toAboutContent(doc);

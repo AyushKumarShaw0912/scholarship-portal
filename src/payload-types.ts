@@ -224,6 +224,7 @@ export interface Scholarship {
     | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -399,6 +400,7 @@ export interface ScholarshipsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -469,6 +471,7 @@ export interface Site {
     href: string;
     id?: string | null;
   }[];
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -521,6 +524,7 @@ export interface Home {
     description: string;
     id?: string | null;
   }[];
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -549,6 +553,7 @@ export interface About {
       | null;
     id?: string | null;
   }[];
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -584,6 +589,7 @@ export interface Contact {
     title: string;
     body: string;
   };
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -612,6 +618,7 @@ export interface Faq {
         id?: string | null;
       }[]
     | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -655,6 +662,7 @@ export interface ScholarshipPage {
       footerNote: string;
     };
   };
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -688,6 +696,7 @@ export interface SiteSelect<T extends boolean = true> {
         href?: T;
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -757,6 +766,7 @@ export interface HomeSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -791,6 +801,7 @@ export interface AboutSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -833,6 +844,7 @@ export interface ContactSelect<T extends boolean = true> {
         title?: T;
         body?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -867,6 +879,7 @@ export interface FaqSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -910,6 +923,7 @@ export interface ScholarshipPageSelect<T extends boolean = true> {
               footerNote?: T;
             };
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

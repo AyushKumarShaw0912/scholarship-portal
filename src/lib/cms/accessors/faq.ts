@@ -4,6 +4,7 @@ import type { FaqContent, FaqItem } from "@/types";
 import { getPayloadClient } from "../client";
 import { withCmsFallback } from "../fallback";
 import { toFaqContent } from "../mappers/faq";
+import { publicReadOptions } from "../query";
 
 export async function getFaqContent(): Promise<FaqContent> {
   return withCmsFallback(
@@ -12,6 +13,7 @@ export async function getFaqContent(): Promise<FaqContent> {
       const doc = await payload.findGlobal({
         slug: "faq",
         depth: 0,
+        ...publicReadOptions,
       });
 
       return toFaqContent(doc);

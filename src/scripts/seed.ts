@@ -18,36 +18,101 @@ import {
   fromSiteSettings,
   getPayloadClient,
 } from "@/lib/cms";
+import type { Payload } from "payload";
+
+const published = { _status: "published" as const };
+
+function formatPayloadError(error: unknown): string {
+  if (
+    error &&
+    typeof error === "object" &&
+    "data" in error &&
+    error.data &&
+    typeof error.data === "object" &&
+    "errors" in error.data &&
+    Array.isArray(error.data.errors)
+  ) {
+    return error.data.errors
+      .map((item: { field?: string; message?: string }) =>
+        [item.field, item.message].filter(Boolean).join(": "),
+      )
+      .join("; ");
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return String(error);
+}
+
+async function findScholarshipBySlug(payload: Payload, slug: string) {
+  // Main collection (published / latest saved). Do NOT use draft:true here —
+  // that only returns version rows and can miss existing docs → unique slug errors.
+  const result = await payload.find({
+    collection: "scholarships",
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    limit: 1,
+    depth: 0,
+    draft: false,
+    overrideAccess: true,
+  });
+
+  return result.docs[0] ?? null;
+}
 
 async function seedScholarships() {
   const payload = await getPayloadClient();
 
   for (const scholarship of scholarships) {
-    const existing = await payload.find({
-      collection: "scholarships",
-      where: {
-        slug: {
-          equals: scholarship.slug,
-        },
-      },
-      limit: 1,
-    });
+    const data = {
+      ...fromScholarship(scholarship),
+      ...published,
+    };
 
-    const data = fromScholarship(scholarship);
+    const existing = await findScholarshipBySlug(payload, scholarship.slug);
 
-    if (existing.docs[0]) {
+    if (existing) {
       await payload.update({
         collection: "scholarships",
-        id: existing.docs[0].id,
+        id: existing.id,
         data,
+        draft: false,
+        overrideAccess: true,
       });
       console.log(`Updated scholarship: ${scholarship.slug}`);
-    } else {
+      continue;
+    }
+
+    try {
       await payload.create({
         collection: "scholarships",
         data,
+        draft: false,
+        overrideAccess: true,
       });
       console.log(`Created scholarship: ${scholarship.slug}`);
+    } catch (error) {
+      // Race / leftover row: unique slug → update instead
+      const retry = await findScholarshipBySlug(payload, scholarship.slug);
+      if (!retry) {
+        throw new Error(
+          `Failed to create scholarship "${scholarship.slug}": ${formatPayloadError(error)}`,
+        );
+      }
+
+      await payload.update({
+        collection: "scholarships",
+        id: retry.id,
+        data,
+        draft: false,
+        overrideAccess: true,
+      });
+      console.log(`Updated scholarship (after conflict): ${scholarship.slug}`);
     }
   }
 }
@@ -55,41 +120,45 @@ async function seedScholarships() {
 async function seedGlobals() {
   const payload = await getPayloadClient();
 
-  await payload.updateGlobal({
-    slug: "site",
-    data: fromSiteSettings(siteConfig, navigation),
-  });
-  console.log("Updated global: site");
+  const globals = [
+    {
+      slug: "site" as const,
+      data: { ...fromSiteSettings(siteConfig, navigation), ...published },
+    },
+    {
+      slug: "home" as const,
+      data: { ...fromHomeContent(homeContent), ...published },
+    },
+    {
+      slug: "about" as const,
+      data: { ...fromAboutContent(aboutContent), ...published },
+    },
+    {
+      slug: "contact" as const,
+      data: { ...fromContactContent(contactContent), ...published },
+    },
+    {
+      slug: "faq" as const,
+      data: { ...fromFaqContent(faqContent), ...published },
+    },
+    {
+      slug: "scholarship-page" as const,
+      data: {
+        ...fromScholarshipPageContent(scholarshipPageContent),
+        ...published,
+      },
+    },
+  ];
 
-  await payload.updateGlobal({
-    slug: "home",
-    data: fromHomeContent(homeContent),
-  });
-  console.log("Updated global: home");
-
-  await payload.updateGlobal({
-    slug: "about",
-    data: fromAboutContent(aboutContent),
-  });
-  console.log("Updated global: about");
-
-  await payload.updateGlobal({
-    slug: "contact",
-    data: fromContactContent(contactContent),
-  });
-  console.log("Updated global: contact");
-
-  await payload.updateGlobal({
-    slug: "faq",
-    data: fromFaqContent(faqContent),
-  });
-  console.log("Updated global: faq");
-
-  await payload.updateGlobal({
-    slug: "scholarship-page",
-    data: fromScholarshipPageContent(scholarshipPageContent),
-  });
-  console.log("Updated global: scholarship-page");
+  for (const global of globals) {
+    await payload.updateGlobal({
+      slug: global.slug,
+      data: global.data,
+      draft: false,
+      overrideAccess: true,
+    });
+    console.log(`Updated global: ${global.slug}`);
+  }
 }
 
 async function seed() {
@@ -109,6 +178,9 @@ async function seed() {
 }
 
 seed().catch((error) => {
-  console.error("Seed failed:", error);
+  console.error("Seed failed:", formatPayloadError(error));
+  if (error && typeof error === "object" && "data" in error) {
+    console.error(JSON.stringify((error as { data: unknown }).data, null, 2));
+  }
   process.exit(1);
 });

@@ -1,13 +1,15 @@
 import type { GlobalConfig } from "payload";
 
-import { anyone, authenticated } from "@/access";
+import { authenticated, authenticatedOrPublished } from "@/access";
+import { contentVersions } from "@/cms/versions";
 import { navLinkFields } from "@/fields";
 
 export const Site: GlobalConfig = {
   slug: "site",
   label: "Site Settings",
+  versions: contentVersions,
   access: {
-    read: anyone,
+    read: authenticatedOrPublished,
     update: authenticated,
   },
   fields: [

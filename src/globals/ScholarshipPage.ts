@@ -1,13 +1,15 @@
 import type { GlobalConfig } from "payload";
 
-import { anyone, authenticated } from "@/access";
+import { authenticated, authenticatedOrPublished } from "@/access";
+import { contentVersions } from "@/cms/versions";
 import { iconSelectField, sectionCopyFields } from "@/fields";
 
 export const ScholarshipPage: GlobalConfig = {
   slug: "scholarship-page",
   label: "Scholarship Page Chrome",
+  versions: contentVersions,
   access: {
-    read: anyone,
+    read: authenticatedOrPublished,
     update: authenticated,
   },
   fields: [

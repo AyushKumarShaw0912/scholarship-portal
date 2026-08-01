@@ -1,18 +1,20 @@
 import type { CollectionConfig } from "payload";
 
-import { anyone, authenticated } from "@/access";
+import { authenticated, authenticatedOrPublished } from "@/access";
+import { contentVersions } from "@/cms/versions";
 import { slugField, stringListField } from "@/fields";
 
 export const Scholarships: CollectionConfig = {
   slug: "scholarships",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["title", "slug", "isActive", "updatedAt"],
+    defaultColumns: ["title", "slug", "isActive", "_status", "updatedAt"],
   },
+  versions: contentVersions,
   access: {
     create: authenticated,
     delete: authenticated,
-    read: anyone,
+    read: authenticatedOrPublished,
     update: authenticated,
   },
   fields: [

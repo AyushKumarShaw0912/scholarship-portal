@@ -1,13 +1,15 @@
 import type { GlobalConfig } from "payload";
 
-import { anyone, authenticated } from "@/access";
+import { authenticated, authenticatedOrPublished } from "@/access";
+import { contentVersions } from "@/cms/versions";
 import { sectionCopyFields, stringListField } from "@/fields";
 
 export const About: GlobalConfig = {
   slug: "about",
   label: "About Page",
+  versions: contentVersions,
   access: {
-    read: anyone,
+    read: authenticatedOrPublished,
     update: authenticated,
   },
   fields: [

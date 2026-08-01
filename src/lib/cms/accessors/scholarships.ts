@@ -4,6 +4,7 @@ import type { Scholarship } from "@/types";
 import { getPayloadClient } from "../client";
 import { withCmsFallback } from "../fallback";
 import { toScholarship } from "../mappers/scholarship";
+import { publicReadOptions } from "../query";
 
 async function fetchScholarshipsFromCms(
   activeOnly: boolean,
@@ -14,6 +15,7 @@ async function fetchScholarshipsFromCms(
     depth: 0,
     limit: 100,
     pagination: false,
+    ...publicReadOptions,
     where: activeOnly
       ? {
           isActive: {
@@ -61,6 +63,7 @@ export async function getScholarshipBySlug(
         collection: "scholarships",
         depth: 0,
         limit: 1,
+        ...publicReadOptions,
         where: {
           slug: {
             equals: slug,
