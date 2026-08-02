@@ -297,6 +297,10 @@ export interface Application {
    */
   householdIncome: number;
   status: 'new' | 'reviewed' | 'shortlisted' | 'rejected';
+  /**
+   * Set automatically when the Google Form invite email is sent.
+   */
+  formInviteSentAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -543,6 +547,7 @@ export interface ApplicationsSelect<T extends boolean = true> {
   parentsProfession?: T;
   householdIncome?: T;
   status?: T;
+  formInviteSentAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -600,9 +605,31 @@ export interface Site {
   phone: string;
   address: string;
   /**
-   * Deprecated. Apply CTAs use the in-app /apply form. Leave blank.
+   * Google Form link emailed to selected shortlisted applicants for follow-up details and documents. Public Apply CTAs still use the in-app /apply form.
    */
   applyUrl?: string | null;
+  /**
+   * Subject line for the Google Form invite email.
+   */
+  shortlistEmailSubject?: string | null;
+  /**
+   * Email body sent to selected shortlisted applicants. Use {{fullName}} and {{formUrl}} as placeholders.
+   */
+  shortlistEmailBody?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   logo?: (number | null) | Media;
   favicon?: (number | null) | Media;
   locale: string;
@@ -904,6 +931,8 @@ export interface SiteSelect<T extends boolean = true> {
   phone?: T;
   address?: T;
   applyUrl?: T;
+  shortlistEmailSubject?: T;
+  shortlistEmailBody?: T;
   logo?: T;
   favicon?: T;
   locale?: T;
