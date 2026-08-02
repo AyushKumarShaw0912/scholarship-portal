@@ -1,4 +1,5 @@
 export { fromAboutContent, toAboutContent } from "./about";
+export { fromApplyContent, toApplyContent } from "./apply";
 export { fromContactContent, toContactContent } from "./contact";
 export { fromFaqContent, toFaqContent } from "./faq";
 export { fromHomeContent, toHomeContent } from "./home";

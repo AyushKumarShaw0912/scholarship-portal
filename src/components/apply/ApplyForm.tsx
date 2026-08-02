@@ -5,37 +5,28 @@ import { useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import { APPLY_LIMITS } from "@/lib/apply-validation";
-import { cn } from "@/lib/utils";
+import type { ApplyFormContent } from "@/types/apply";
 
 const fieldClass =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 const labelClass = "mb-1.5 block text-sm font-medium";
 
-const MARKSHEET_INPUTS = [
-  {
-    name: "class10BoardMarksheet",
-    label: "Class 10 board exam marksheet",
-  },
-  {
-    name: "class10PreBoardMarksheet",
-    label: "Class 10 pre-board exam marksheet",
-  },
-  {
-    name: "class8Marksheet",
-    label: "Class 8 results marksheet",
-  },
-  {
-    name: "class9Marksheet",
-    label: "Class 9 results marksheet",
-  },
-] as const;
+type ApplyFormProps = {
+  readonly content: ApplyFormContent;
+};
 
-export function ApplyForm() {
+function subjectLabel(template: string, n: number): string {
+  return template.replaceAll("{n}", String(n));
+}
+
+export function ApplyForm({ content }: ApplyFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
+  const { labels, options, sections, subjectDefaults, success, errors, submit } =
+    content;
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -56,7 +47,7 @@ export function ApplyForm() {
         };
 
         if (!response.ok || !payload.ok) {
-          setError(payload.error || "Submission failed. Please try again.");
+          setError(payload.error || errors.submissionFailed);
           return;
         }
 
@@ -64,7 +55,7 @@ export function ApplyForm() {
         form.reset();
         router.refresh();
       } catch {
-        setError("Network error. Please try again.");
+        setError(errors.network);
       }
     });
   }
@@ -72,17 +63,20 @@ export function ApplyForm() {
   if (done) {
     return (
       <div className="rounded-xl border bg-muted/30 p-8 text-center">
-        <h2 className="text-xl font-semibold">Application submitted</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Thank you. We have received your application and marksheet images.
-          Our team will review them shortly.
-        </p>
+        <h2 className="text-xl font-semibold">{success.title}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{success.body}</p>
         <Button className="mt-6" type="button" onClick={() => setDone(false)}>
-          Submit another application
+          {success.resetLabel}
         </Button>
       </div>
     );
   }
+
+  const percentageFields = [
+    ["class8Percentage", labels.class8Percentage],
+    ["class9Percentage", labels.class9Percentage],
+    ["class10PreBoardPercentage", labels.class10PreBoardPercentage],
+  ] as const;
 
   return (
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
@@ -100,7 +94,7 @@ export function ApplyForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label className={labelClass} htmlFor="fullName">
-            Name
+            {labels.fullName}
           </label>
           <input
             id="fullName"
@@ -114,8 +108,58 @@ export function ApplyForm() {
         </div>
 
         <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="email">
+            {labels.email}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            maxLength={APPLY_LIMITS.email.max}
+            className={fieldClass}
+            autoComplete="email"
+            inputMode="email"
+          />
+        </div>
+
+        <div>
+          <label className={labelClass} htmlFor="phone">
+            {labels.phone}
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            minLength={APPLY_LIMITS.phone.min}
+            maxLength={APPLY_LIMITS.phone.max}
+            className={fieldClass}
+            autoComplete="tel"
+            inputMode="tel"
+          />
+        </div>
+
+        <div>
+          <label className={labelClass} htmlFor="guardianPhone">
+            {labels.guardianPhone}
+          </label>
+          <input
+            id="guardianPhone"
+            name="guardianPhone"
+            type="tel"
+            required
+            minLength={APPLY_LIMITS.phone.min}
+            maxLength={APPLY_LIMITS.phone.max}
+            className={fieldClass}
+            autoComplete="tel"
+            inputMode="tel"
+          />
+        </div>
+
+        <div>
           <label className={labelClass} htmlFor="target">
-            Objective / Target
+            {labels.target}
           </label>
           <select
             id="target"
@@ -125,43 +169,189 @@ export function ApplyForm() {
             defaultValue=""
           >
             <option value="" disabled>
-              Select…
+              {labels.selectPlaceholder}
             </option>
-            <option value="jee">JEE</option>
-            <option value="neet">NEET</option>
+            <option value="jee">{options.targetJee}</option>
+            <option value="neet">{options.targetNeet}</option>
           </select>
+        </div>
+
+        <div>
+          <label className={labelClass} htmlFor="board">
+            {labels.board}
+          </label>
+          <select
+            id="board"
+            name="board"
+            required
+            className={fieldClass}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              {labels.selectPlaceholder}
+            </option>
+            <option value="wbbse">{options.boardWbbse}</option>
+            <option value="cbse">{options.boardCbse}</option>
+            <option value="icse">{options.boardIcse}</option>
+            <option value="other">{options.boardOther}</option>
+          </select>
+        </div>
+
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="schoolName">
+            {labels.schoolName}
+          </label>
+          <input
+            id="schoolName"
+            name="schoolName"
+            required
+            minLength={APPLY_LIMITS.schoolName.min}
+            maxLength={APPLY_LIMITS.schoolName.max}
+            className={fieldClass}
+          />
         </div>
       </div>
 
       <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
-        <legend className="px-1 text-sm font-semibold">Marksheet snapshots</legend>
+        <legend className="px-1 text-sm font-semibold">
+          {sections.percentagesTitle}
+        </legend>
         <p className="text-xs text-muted-foreground">
-          Upload clear photos or scans (JPEG, PNG, or WebP, max 5 MB each).
-          Files are stored in media storage, not in the database.
+          {sections.percentagesHelp}
         </p>
-        {MARKSHEET_INPUTS.map((input) => (
-          <div key={input.name}>
-            <label className={labelClass} htmlFor={input.name}>
-              {input.label}
+        <div className="grid gap-4 sm:grid-cols-3">
+          {percentageFields.map(([name, label]) => (
+            <div key={name}>
+              <label className={labelClass} htmlFor={name}>
+                {label}
+              </label>
+              <input
+                id={name}
+                name={name}
+                type="number"
+                required
+                min={APPLY_LIMITS.percent.min}
+                max={APPLY_LIMITS.percent.max}
+                step="0.01"
+                inputMode="decimal"
+                className={fieldClass}
+              />
+            </div>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
+        <legend className="px-1 text-sm font-semibold">
+          {sections.totalsTitle}
+        </legend>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={labelClass} htmlFor="class10TotalMarks">
+              {labels.class10TotalMarks}
             </label>
             <input
-              id={input.name}
-              name={input.name}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
+              id="class10TotalMarks"
+              name="class10TotalMarks"
+              type="number"
               required
-              className={cn(
-                fieldClass,
-                "cursor-pointer file:mr-3 file:border-0 file:bg-transparent file:text-sm file:font-medium",
-              )}
+              min={APPLY_LIMITS.marks.min}
+              max={APPLY_LIMITS.marks.max}
+              step="0.01"
+              inputMode="decimal"
+              className={fieldClass}
             />
           </div>
-        ))}
+          <div>
+            <label className={labelClass} htmlFor="class10MaxMarks">
+              {labels.class10MaxMarks}
+            </label>
+            <input
+              id="class10MaxMarks"
+              name="class10MaxMarks"
+              type="number"
+              required
+              min={1}
+              max={APPLY_LIMITS.marks.max}
+              step="0.01"
+              inputMode="decimal"
+              className={fieldClass}
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
+        <legend className="px-1 text-sm font-semibold">
+          {sections.subjectsTitle}
+        </legend>
+        <p className="text-xs text-muted-foreground">{sections.subjectsHelp}</p>
+        <div className="space-y-4">
+          {subjectDefaults.map((defaultName, index) => {
+            const n = (index + 1) as 1 | 2 | 3 | 4 | 5;
+            return (
+              <div
+                key={n}
+                className="grid gap-3 sm:grid-cols-[1.4fr_1fr_1fr]"
+              >
+                <div>
+                  <label className={labelClass} htmlFor={`subject${n}Name`}>
+                    {subjectLabel(labels.subjectName, n)}
+                  </label>
+                  <input
+                    id={`subject${n}Name`}
+                    name={`subject${n}Name`}
+                    required
+                    defaultValue={defaultName}
+                    minLength={APPLY_LIMITS.subjectName.min}
+                    maxLength={APPLY_LIMITS.subjectName.max}
+                    className={fieldClass}
+                  />
+                </div>
+                <div>
+                  <label
+                    className={labelClass}
+                    htmlFor={`subject${n}Obtained`}
+                  >
+                    {labels.subjectObtained}
+                  </label>
+                  <input
+                    id={`subject${n}Obtained`}
+                    name={`subject${n}Obtained`}
+                    type="number"
+                    required
+                    min={APPLY_LIMITS.marks.min}
+                    max={APPLY_LIMITS.marks.max}
+                    step="0.01"
+                    inputMode="decimal"
+                    className={fieldClass}
+                  />
+                </div>
+                <div>
+                  <label className={labelClass} htmlFor={`subject${n}Max`}>
+                    {labels.subjectMax}
+                  </label>
+                  <input
+                    id={`subject${n}Max`}
+                    name={`subject${n}Max`}
+                    type="number"
+                    required
+                    min={1}
+                    max={APPLY_LIMITS.marks.max}
+                    step="0.01"
+                    inputMode="decimal"
+                    className={fieldClass}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </fieldset>
 
       <div>
         <label className={labelClass} htmlFor="academicAchievements">
-          Any other academic achievements
+          {labels.academicAchievements}
         </label>
         <textarea
           id="academicAchievements"
@@ -174,7 +364,7 @@ export function ApplyForm() {
 
       <div>
         <label className={labelClass} htmlFor="address">
-          Full address (with local landmark)
+          {labels.address}
         </label>
         <textarea
           id="address"
@@ -190,7 +380,7 @@ export function ApplyForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label className={labelClass} htmlFor="parentsName">
-            Name of parents
+            {labels.parentsName}
           </label>
           <input
             id="parentsName"
@@ -203,7 +393,7 @@ export function ApplyForm() {
         </div>
         <div>
           <label className={labelClass} htmlFor="parentsProfession">
-            Parents profession
+            {labels.parentsProfession}
           </label>
           <input
             id="parentsProfession"
@@ -216,7 +406,7 @@ export function ApplyForm() {
         </div>
         <div className="sm:col-span-2">
           <label className={labelClass} htmlFor="householdIncome">
-            Gross approx household income (both parents combined, INR)
+            {labels.householdIncome}
           </label>
           <input
             id="householdIncome"
@@ -247,7 +437,7 @@ export function ApplyForm() {
         size="lg"
         className="w-full sm:w-auto"
       >
-        {pending ? "Submitting…" : "Submit application"}
+        {pending ? submit.pending : submit.idle}
       </Button>
     </form>
   );

@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import { Media, Scholarships, Users, Applications } from "./collections";
 import {
   About,
+  Apply,
   Contact,
   Faq,
   Home,
@@ -30,7 +31,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Scholarships, Applications],
-  globals: [Site, Home, About, Contact, Faq, ScholarshipPage],
+  globals: [Site, Home, About, Contact, Faq, ScholarshipPage, Apply],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "CHANGE_ME_IN_ENV_LOCAL",
   typescript: {

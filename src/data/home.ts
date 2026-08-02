@@ -100,7 +100,7 @@ export const homeContent = {
       title: "Merit+ Financial Need Based Selection",
 
       description:
-        "Students are selected based on their academic performances for last 3 years, financial need, a selection test, and interviews.",
+        "Students are selected based on Class 10 board marks, financial need, a selection test, and interviews.",
 
       icon: Users,
     },
@@ -114,9 +114,10 @@ export const homeContent = {
     },
 
     {
-      title: "Submit Documents",
+      title: "Enter Class 10 Marks",
 
-      description: "Upload your academic records and supporting documents.",
+      description:
+        "Share Class 8–9 percentages and Class 10 board subject marks in the form.",
     },
 
     {

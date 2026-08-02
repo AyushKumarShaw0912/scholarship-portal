@@ -38,6 +38,6 @@ export const contactContent = {
 
   enquiry: {
     title: "Scholarship Enquiries",
-    body: "If you have any questions regarding eligibility, required documents, the selection process, or the application procedure, please contact us via email. We will respond as soon as possible.",
+    body: "If you have any questions regarding eligibility, Class 10 marks requirements, the selection process, or the application procedure, please contact us via email. We will respond as soon as possible.",
   },
 } as const satisfies ContactContent;

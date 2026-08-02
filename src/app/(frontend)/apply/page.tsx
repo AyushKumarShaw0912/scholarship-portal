@@ -3,30 +3,35 @@ import type { Metadata } from "next";
 import { ApplyForm } from "@/components/apply/ApplyForm";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
-import { getSiteSettings } from "@/lib/cms";
+import { getApplyContent, getSiteSettings } from "@/lib/cms";
 import { Container, Section } from "@/layout";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteSettings();
+  const [site, apply] = await Promise.all([
+    getSiteSettings(),
+    getApplyContent(),
+  ]);
 
   return {
-    title: `Apply | ${site.name}`,
-    description: "Submit your scholarship application online.",
+    title: `${apply.meta.title} | ${site.name}`,
+    description: apply.meta.description,
   };
 }
 
 export default async function ApplyPage() {
+  const apply = await getApplyContent();
+
   return (
     <Section spacing="lg">
       <Container>
         <Reveal>
           <SectionHeading
-            title="Apply for a scholarship"
-            description="Complete the form below and upload clear marksheet snapshots. Your details are saved in our system; images go to secure media storage."
+            title={apply.heading.title}
+            description={apply.heading.description}
           />
 
           <div className="mx-auto mt-10 max-w-2xl">
-            <ApplyForm />
+            <ApplyForm content={apply.form} />
           </div>
         </Reveal>
       </Container>

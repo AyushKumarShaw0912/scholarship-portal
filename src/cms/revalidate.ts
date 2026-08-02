@@ -62,6 +62,14 @@ export const revalidateContactGlobal: GlobalAfterChangeHook = ({
   return doc;
 };
 
+export const revalidateApplyGlobal: GlobalAfterChangeHook = ({
+  doc,
+  req: { payload },
+}) => {
+  safeRevalidate([ROUTES.APPLY], payload.logger);
+  return doc;
+};
+
 export const revalidateFaqGlobal: GlobalAfterChangeHook = ({
   doc,
   req: { payload },
