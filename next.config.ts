@@ -29,6 +29,8 @@ function r2RemotePatterns(): NonNullable<
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  // Keep sharp as a native external so Vercel can load platform binaries.
+  serverExternalPackages: ["sharp", "pg"],
   images: {
     localPatterns: [
       {

@@ -32,8 +32,10 @@ Never point local `.env.local` at the production database.
 Set Build Command to:
 
 ```bash
-pnpm ci
+pnpm run ci
 ```
+
+(`pnpm ci` is a reserved pnpm command and will fail; always use `pnpm run ci`.)
 
 That runs:
 
