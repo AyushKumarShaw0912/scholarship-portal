@@ -46,6 +46,8 @@ export const applyContent = {
       boardOther: "Other",
     },
     sections: {
+      personalTitle: "Personal details",
+      familyTitle: "Address & household",
       percentagesTitle: "Academic percentages",
       percentagesHelp:
         "Enter overall percentages for Class 8, Class 9, and Class 10 pre-board. Class 10 board total is entered separately below.",

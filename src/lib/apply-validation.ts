@@ -321,21 +321,50 @@ export function computeAcademicTrend(input: {
   return { academicTrend, trendScore };
 }
 
-export function parseApplicationFields(
+export type ApplicationFieldErrors = Partial<
+  Record<keyof ApplicationInput, string>
+>;
+
+/** Client-side validation: first message per field for inline UI errors. */
+export function validateApplicationFields(
   input: unknown,
-): { data: ParsedApplicationInput } | { error: string } {
+):
+  | { success: true; data: ApplicationInput }
+  | { success: false; fieldErrors: ApplicationFieldErrors } {
   const result = applicationInputSchema.safeParse(input);
 
   if (!result.success) {
-    const first = result.error.issues[0];
-    return { error: first?.message ?? "Invalid application data." };
+    const flattened = z.flattenError(result.error);
+    const fieldErrors: ApplicationFieldErrors = {};
+
+    for (const [key, messages] of Object.entries(flattened.fieldErrors)) {
+      const message = messages?.[0];
+      if (message) {
+        fieldErrors[key as keyof ApplicationInput] = message;
+      }
+    }
+
+    return { success: false, fieldErrors };
   }
 
-  const trend = computeAcademicTrend(result.data);
+  return { success: true, data: result.data };
+}
+
+export function parseApplicationFields(
+  input: unknown,
+): { data: ParsedApplicationInput } | { error: string } {
+  const validated = validateApplicationFields(input);
+
+  if (!validated.success) {
+    const first = Object.values(validated.fieldErrors)[0];
+    return { error: first ?? "Invalid application data." };
+  }
+
+  const trend = computeAcademicTrend(validated.data);
 
   return {
     data: {
-      ...result.data,
+      ...validated.data,
       academicTrend: trend.academicTrend,
       trendScore: trend.trendScore,
     },

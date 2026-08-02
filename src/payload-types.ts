@@ -860,6 +860,8 @@ export interface Apply {
       boardOther: string;
     };
     sections: {
+      personalTitle: string;
+      familyTitle: string;
       percentagesTitle: string;
       percentagesHelp: string;
       totalsTitle: string;
@@ -1209,6 +1211,8 @@ export interface ApplySelect<T extends boolean = true> {
         sections?:
           | T
           | {
+              personalTitle?: T;
+              familyTitle?: T;
               percentagesTitle?: T;
               percentagesHelp?: T;
               totalsTitle?: T;

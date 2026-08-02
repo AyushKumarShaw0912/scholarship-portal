@@ -94,6 +94,8 @@ export const Apply: GlobalConfig = {
           type: "group",
           label: "Form sections",
           fields: [
+            requiredText("personalTitle", "Personal details section title"),
+            requiredText("familyTitle", "Address & household section title"),
             requiredText("percentagesTitle", "Percentages section title"),
             requiredTextarea("percentagesHelp", "Percentages help text"),
             requiredText("totalsTitle", "Totals section title"),

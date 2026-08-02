@@ -34,6 +34,8 @@ export interface ApplyFormOptions {
 }
 
 export interface ApplyFormSections {
+  readonly personalTitle: string;
+  readonly familyTitle: string;
   readonly percentagesTitle: string;
   readonly percentagesHelp: string;
   readonly totalsTitle: string;

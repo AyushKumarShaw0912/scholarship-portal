@@ -77,6 +77,8 @@ const OPTION_KEYS = [
 ] as const;
 
 const SECTION_KEYS = [
+  "personalTitle",
+  "familyTitle",
   "percentagesTitle",
   "percentagesHelp",
   "totalsTitle",
@@ -154,6 +156,8 @@ export function toApplyContent(doc: ApplyDoc): ApplyContent | null {
       boardOther: options.boardOther,
     },
     sections: {
+      personalTitle: sections.personalTitle,
+      familyTitle: sections.familyTitle,
       percentagesTitle: sections.percentagesTitle,
       percentagesHelp: sections.percentagesHelp,
       totalsTitle: sections.totalsTitle,

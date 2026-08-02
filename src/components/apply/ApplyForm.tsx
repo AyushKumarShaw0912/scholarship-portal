@@ -4,36 +4,131 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
-import { APPLY_LIMITS } from "@/lib/apply-validation";
+import {
+  validateApplicationFields,
+  type ApplicationFieldErrors,
+  type ApplicationInput,
+} from "@/lib/apply-validation";
 import type { ApplyFormContent } from "@/types/apply";
 
 const fieldClass =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
+const fieldErrorClass =
+  "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/30";
+
 const labelClass = "mb-1.5 block text-sm font-medium";
+
+const errorClass = "mt-1.5 text-sm text-destructive";
 
 type ApplyFormProps = {
   readonly content: ApplyFormContent;
 };
 
+type FieldName = keyof ApplicationInput;
+
 function subjectLabel(template: string, n: number): string {
   return template.replaceAll("{n}", String(n));
 }
 
+function readFormValues(
+  formData: FormData,
+): Record<FieldName, string> {
+  const get = (name: FieldName) => {
+    const value = formData.get(name);
+    return typeof value === "string" ? value : "";
+  };
+
+  return {
+    fullName: get("fullName"),
+    email: get("email"),
+    phone: get("phone"),
+    guardianPhone: get("guardianPhone"),
+    target: get("target"),
+    board: get("board"),
+    schoolName: get("schoolName"),
+    class8Percentage: get("class8Percentage"),
+    class9Percentage: get("class9Percentage"),
+    class10PreBoardPercentage: get("class10PreBoardPercentage"),
+    class10TotalMarks: get("class10TotalMarks"),
+    class10MaxMarks: get("class10MaxMarks"),
+    subject1Name: get("subject1Name"),
+    subject1Obtained: get("subject1Obtained"),
+    subject1Max: get("subject1Max"),
+    subject2Name: get("subject2Name"),
+    subject2Obtained: get("subject2Obtained"),
+    subject2Max: get("subject2Max"),
+    subject3Name: get("subject3Name"),
+    subject3Obtained: get("subject3Obtained"),
+    subject3Max: get("subject3Max"),
+    subject4Name: get("subject4Name"),
+    subject4Obtained: get("subject4Obtained"),
+    subject4Max: get("subject4Max"),
+    subject5Name: get("subject5Name"),
+    subject5Obtained: get("subject5Obtained"),
+    subject5Max: get("subject5Max"),
+    academicAchievements: get("academicAchievements"),
+    address: get("address"),
+    parentsName: get("parentsName"),
+    parentsProfession: get("parentsProfession"),
+    householdIncome: get("householdIncome"),
+  };
+}
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) {
+    return null;
+  }
+
+  return (
+    <p className={errorClass} role="alert">
+      {message}
+    </p>
+  );
+}
+
 export function ApplyForm({ content }: ApplyFormProps) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<ApplicationFieldErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
   const { labels, options, sections, subjectDefaults, success, errors, submit } =
     content;
 
+  function clearFieldError(name: FieldName) {
+    setFieldErrors((current) => {
+      if (!current[name]) {
+        return current;
+      }
+      const next = { ...current };
+      delete next[name];
+      return next;
+    });
+  }
+
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
+    setSubmitError(null);
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const values = readFormValues(formData);
+    const validated = validateApplicationFields(values);
+
+    if (!validated.success) {
+      setFieldErrors(validated.fieldErrors);
+      const firstKey = Object.keys(validated.fieldErrors)[0];
+      if (firstKey) {
+        const el = form.elements.namedItem(firstKey);
+        if (el instanceof HTMLElement) {
+          el.focus();
+        }
+      }
+      return;
+    }
+
+    setFieldErrors({});
 
     startTransition(async () => {
       try {
@@ -47,7 +142,7 @@ export function ApplyForm({ content }: ApplyFormProps) {
         };
 
         if (!response.ok || !payload.ok) {
-          setError(payload.error || errors.submissionFailed);
+          setSubmitError(payload.error || errors.submissionFailed);
           return;
         }
 
@@ -55,7 +150,7 @@ export function ApplyForm({ content }: ApplyFormProps) {
         form.reset();
         router.refresh();
       } catch {
-        setError(errors.network);
+        setSubmitError(errors.network);
       }
     });
   }
@@ -78,6 +173,10 @@ export function ApplyForm({ content }: ApplyFormProps) {
     ["class10PreBoardPercentage", labels.class10PreBoardPercentage],
   ] as const;
 
+  function inputClass(name: FieldName) {
+    return fieldErrors[name] ? `${fieldClass} ${fieldErrorClass}` : fieldClass;
+  }
+
   return (
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
       <div className="absolute -left-[9999px]" aria-hidden>
@@ -91,126 +190,203 @@ export function ApplyForm({ content }: ApplyFormProps) {
         />
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor="fullName">
-            {labels.fullName}
-          </label>
-          <input
-            id="fullName"
-            name="fullName"
-            required
-            minLength={APPLY_LIMITS.fullName.min}
-            maxLength={APPLY_LIMITS.fullName.max}
-            className={fieldClass}
-            autoComplete="name"
-          />
-        </div>
+      <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
+        <legend className="px-1 text-sm font-semibold">
+          {sections.personalTitle}
+        </legend>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <label className={labelClass} htmlFor="fullName">
+              {labels.fullName}
+            </label>
+            <input
+              id="fullName"
+              name="fullName"
+              className={inputClass("fullName")}
+              autoComplete="name"
+              aria-invalid={Boolean(fieldErrors.fullName)}
+              onChange={() => clearFieldError("fullName")}
+            />
+            <FieldError message={fieldErrors.fullName} />
+          </div>
 
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor="email">
-            {labels.email}
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            maxLength={APPLY_LIMITS.email.max}
-            className={fieldClass}
-            autoComplete="email"
-            inputMode="email"
-          />
-        </div>
+          <div className="sm:col-span-2">
+            <label className={labelClass} htmlFor="email">
+              {labels.email}
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              className={inputClass("email")}
+              autoComplete="email"
+              inputMode="email"
+              aria-invalid={Boolean(fieldErrors.email)}
+              onChange={() => clearFieldError("email")}
+            />
+            <FieldError message={fieldErrors.email} />
+          </div>
 
-        <div>
-          <label className={labelClass} htmlFor="phone">
-            {labels.phone}
-          </label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            required
-            minLength={APPLY_LIMITS.phone.min}
-            maxLength={APPLY_LIMITS.phone.max}
-            className={fieldClass}
-            autoComplete="tel"
-            inputMode="tel"
-          />
-        </div>
+          <div>
+            <label className={labelClass} htmlFor="phone">
+              {labels.phone}
+            </label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              className={inputClass("phone")}
+              autoComplete="tel"
+              inputMode="tel"
+              aria-invalid={Boolean(fieldErrors.phone)}
+              onChange={() => clearFieldError("phone")}
+            />
+            <FieldError message={fieldErrors.phone} />
+          </div>
 
-        <div>
-          <label className={labelClass} htmlFor="guardianPhone">
-            {labels.guardianPhone}
-          </label>
-          <input
-            id="guardianPhone"
-            name="guardianPhone"
-            type="tel"
-            required
-            minLength={APPLY_LIMITS.phone.min}
-            maxLength={APPLY_LIMITS.phone.max}
-            className={fieldClass}
-            autoComplete="tel"
-            inputMode="tel"
-          />
-        </div>
+          <div>
+            <label className={labelClass} htmlFor="guardianPhone">
+              {labels.guardianPhone}
+            </label>
+            <input
+              id="guardianPhone"
+              name="guardianPhone"
+              type="tel"
+              className={inputClass("guardianPhone")}
+              autoComplete="tel"
+              inputMode="tel"
+              aria-invalid={Boolean(fieldErrors.guardianPhone)}
+              onChange={() => clearFieldError("guardianPhone")}
+            />
+            <FieldError message={fieldErrors.guardianPhone} />
+          </div>
 
-        <div>
-          <label className={labelClass} htmlFor="target">
-            {labels.target}
-          </label>
-          <select
-            id="target"
-            name="target"
-            required
-            className={fieldClass}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              {labels.selectPlaceholder}
-            </option>
-            <option value="jee">{options.targetJee}</option>
-            <option value="neet">{options.targetNeet}</option>
-          </select>
-        </div>
+          <div>
+            <label className={labelClass} htmlFor="target">
+              {labels.target}
+            </label>
+            <select
+              id="target"
+              name="target"
+              className={inputClass("target")}
+              defaultValue=""
+              aria-invalid={Boolean(fieldErrors.target)}
+              onChange={() => clearFieldError("target")}
+            >
+              <option value="" disabled>
+                {labels.selectPlaceholder}
+              </option>
+              <option value="jee">{options.targetJee}</option>
+              <option value="neet">{options.targetNeet}</option>
+            </select>
+            <FieldError message={fieldErrors.target} />
+          </div>
 
-        <div>
-          <label className={labelClass} htmlFor="board">
-            {labels.board}
-          </label>
-          <select
-            id="board"
-            name="board"
-            required
-            className={fieldClass}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              {labels.selectPlaceholder}
-            </option>
-            <option value="wbbse">{options.boardWbbse}</option>
-            <option value="cbse">{options.boardCbse}</option>
-            <option value="icse">{options.boardIcse}</option>
-            <option value="other">{options.boardOther}</option>
-          </select>
-        </div>
+          <div>
+            <label className={labelClass} htmlFor="board">
+              {labels.board}
+            </label>
+            <select
+              id="board"
+              name="board"
+              className={inputClass("board")}
+              defaultValue=""
+              aria-invalid={Boolean(fieldErrors.board)}
+              onChange={() => clearFieldError("board")}
+            >
+              <option value="" disabled>
+                {labels.selectPlaceholder}
+              </option>
+              <option value="wbbse">{options.boardWbbse}</option>
+              <option value="cbse">{options.boardCbse}</option>
+              <option value="icse">{options.boardIcse}</option>
+              <option value="other">{options.boardOther}</option>
+            </select>
+            <FieldError message={fieldErrors.board} />
+          </div>
 
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor="schoolName">
-            {labels.schoolName}
-          </label>
-          <input
-            id="schoolName"
-            name="schoolName"
-            required
-            minLength={APPLY_LIMITS.schoolName.min}
-            maxLength={APPLY_LIMITS.schoolName.max}
-            className={fieldClass}
-          />
+          <div className="sm:col-span-2">
+            <label className={labelClass} htmlFor="schoolName">
+              {labels.schoolName}
+            </label>
+            <input
+              id="schoolName"
+              name="schoolName"
+              className={inputClass("schoolName")}
+              aria-invalid={Boolean(fieldErrors.schoolName)}
+              onChange={() => clearFieldError("schoolName")}
+            />
+            <FieldError message={fieldErrors.schoolName} />
+          </div>
         </div>
-      </div>
+      </fieldset>
+
+      <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
+        <legend className="px-1 text-sm font-semibold">
+          {sections.familyTitle}
+        </legend>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <label className={labelClass} htmlFor="address">
+              {labels.address}
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              rows={3}
+              className={inputClass("address")}
+              aria-invalid={Boolean(fieldErrors.address)}
+              onChange={() => clearFieldError("address")}
+            />
+            <FieldError message={fieldErrors.address} />
+          </div>
+
+          <div>
+            <label className={labelClass} htmlFor="parentsName">
+              {labels.parentsName}
+            </label>
+            <input
+              id="parentsName"
+              name="parentsName"
+              className={inputClass("parentsName")}
+              aria-invalid={Boolean(fieldErrors.parentsName)}
+              onChange={() => clearFieldError("parentsName")}
+            />
+            <FieldError message={fieldErrors.parentsName} />
+          </div>
+
+          <div>
+            <label className={labelClass} htmlFor="parentsProfession">
+              {labels.parentsProfession}
+            </label>
+            <input
+              id="parentsProfession"
+              name="parentsProfession"
+              className={inputClass("parentsProfession")}
+              aria-invalid={Boolean(fieldErrors.parentsProfession)}
+              onChange={() => clearFieldError("parentsProfession")}
+            />
+            <FieldError message={fieldErrors.parentsProfession} />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className={labelClass} htmlFor="householdIncome">
+              {labels.householdIncome}
+            </label>
+            <input
+              id="householdIncome"
+              name="householdIncome"
+              type="number"
+              step={1}
+              inputMode="numeric"
+              className={inputClass("householdIncome")}
+              aria-invalid={Boolean(fieldErrors.householdIncome)}
+              onChange={() => clearFieldError("householdIncome")}
+            />
+            <FieldError message={fieldErrors.householdIncome} />
+          </div>
+        </div>
+      </fieldset>
 
       <fieldset className="space-y-4 rounded-xl border p-4 sm:p-5">
         <legend className="px-1 text-sm font-semibold">
@@ -229,13 +405,13 @@ export function ApplyForm({ content }: ApplyFormProps) {
                 id={name}
                 name={name}
                 type="number"
-                required
-                min={APPLY_LIMITS.percent.min}
-                max={APPLY_LIMITS.percent.max}
                 step="0.01"
                 inputMode="decimal"
-                className={fieldClass}
+                className={inputClass(name)}
+                aria-invalid={Boolean(fieldErrors[name])}
+                onChange={() => clearFieldError(name)}
               />
+              <FieldError message={fieldErrors[name]} />
             </div>
           ))}
         </div>
@@ -254,13 +430,13 @@ export function ApplyForm({ content }: ApplyFormProps) {
               id="class10TotalMarks"
               name="class10TotalMarks"
               type="number"
-              required
-              min={APPLY_LIMITS.marks.min}
-              max={APPLY_LIMITS.marks.max}
               step="0.01"
               inputMode="decimal"
-              className={fieldClass}
+              className={inputClass("class10TotalMarks")}
+              aria-invalid={Boolean(fieldErrors.class10TotalMarks)}
+              onChange={() => clearFieldError("class10TotalMarks")}
             />
+            <FieldError message={fieldErrors.class10TotalMarks} />
           </div>
           <div>
             <label className={labelClass} htmlFor="class10MaxMarks">
@@ -270,13 +446,13 @@ export function ApplyForm({ content }: ApplyFormProps) {
               id="class10MaxMarks"
               name="class10MaxMarks"
               type="number"
-              required
-              min={1}
-              max={APPLY_LIMITS.marks.max}
               step="0.01"
               inputMode="decimal"
-              className={fieldClass}
+              className={inputClass("class10MaxMarks")}
+              aria-invalid={Boolean(fieldErrors.class10MaxMarks)}
+              onChange={() => clearFieldError("class10MaxMarks")}
             />
+            <FieldError message={fieldErrors.class10MaxMarks} />
           </div>
         </div>
       </fieldset>
@@ -289,59 +465,60 @@ export function ApplyForm({ content }: ApplyFormProps) {
         <div className="space-y-4">
           {subjectDefaults.map((defaultName, index) => {
             const n = (index + 1) as 1 | 2 | 3 | 4 | 5;
+            const nameKey = `subject${n}Name` as const;
+            const obtainedKey = `subject${n}Obtained` as const;
+            const maxKey = `subject${n}Max` as const;
+
             return (
               <div
                 key={n}
                 className="grid gap-3 sm:grid-cols-[1.4fr_1fr_1fr]"
               >
                 <div>
-                  <label className={labelClass} htmlFor={`subject${n}Name`}>
+                  <label className={labelClass} htmlFor={nameKey}>
                     {subjectLabel(labels.subjectName, n)}
                   </label>
                   <input
-                    id={`subject${n}Name`}
-                    name={`subject${n}Name`}
-                    required
+                    id={nameKey}
+                    name={nameKey}
                     defaultValue={defaultName}
-                    minLength={APPLY_LIMITS.subjectName.min}
-                    maxLength={APPLY_LIMITS.subjectName.max}
-                    className={fieldClass}
+                    className={inputClass(nameKey)}
+                    aria-invalid={Boolean(fieldErrors[nameKey])}
+                    onChange={() => clearFieldError(nameKey)}
                   />
+                  <FieldError message={fieldErrors[nameKey]} />
                 </div>
                 <div>
-                  <label
-                    className={labelClass}
-                    htmlFor={`subject${n}Obtained`}
-                  >
+                  <label className={labelClass} htmlFor={obtainedKey}>
                     {labels.subjectObtained}
                   </label>
                   <input
-                    id={`subject${n}Obtained`}
-                    name={`subject${n}Obtained`}
+                    id={obtainedKey}
+                    name={obtainedKey}
                     type="number"
-                    required
-                    min={APPLY_LIMITS.marks.min}
-                    max={APPLY_LIMITS.marks.max}
                     step="0.01"
                     inputMode="decimal"
-                    className={fieldClass}
+                    className={inputClass(obtainedKey)}
+                    aria-invalid={Boolean(fieldErrors[obtainedKey])}
+                    onChange={() => clearFieldError(obtainedKey)}
                   />
+                  <FieldError message={fieldErrors[obtainedKey]} />
                 </div>
                 <div>
-                  <label className={labelClass} htmlFor={`subject${n}Max`}>
+                  <label className={labelClass} htmlFor={maxKey}>
                     {labels.subjectMax}
                   </label>
                   <input
-                    id={`subject${n}Max`}
-                    name={`subject${n}Max`}
+                    id={maxKey}
+                    name={maxKey}
                     type="number"
-                    required
-                    min={1}
-                    max={APPLY_LIMITS.marks.max}
                     step="0.01"
                     inputMode="decimal"
-                    className={fieldClass}
+                    className={inputClass(maxKey)}
+                    aria-invalid={Boolean(fieldErrors[maxKey])}
+                    onChange={() => clearFieldError(maxKey)}
                   />
+                  <FieldError message={fieldErrors[maxKey]} />
                 </div>
               </div>
             );
@@ -357,77 +534,19 @@ export function ApplyForm({ content }: ApplyFormProps) {
           id="academicAchievements"
           name="academicAchievements"
           rows={3}
-          maxLength={APPLY_LIMITS.academicAchievements.max}
-          className={fieldClass}
+          className={inputClass("academicAchievements")}
+          aria-invalid={Boolean(fieldErrors.academicAchievements)}
+          onChange={() => clearFieldError("academicAchievements")}
         />
+        <FieldError message={fieldErrors.academicAchievements} />
       </div>
 
-      <div>
-        <label className={labelClass} htmlFor="address">
-          {labels.address}
-        </label>
-        <textarea
-          id="address"
-          name="address"
-          rows={3}
-          required
-          minLength={APPLY_LIMITS.address.min}
-          maxLength={APPLY_LIMITS.address.max}
-          className={fieldClass}
-        />
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label className={labelClass} htmlFor="parentsName">
-            {labels.parentsName}
-          </label>
-          <input
-            id="parentsName"
-            name="parentsName"
-            required
-            minLength={APPLY_LIMITS.parentsName.min}
-            maxLength={APPLY_LIMITS.parentsName.max}
-            className={fieldClass}
-          />
-        </div>
-        <div>
-          <label className={labelClass} htmlFor="parentsProfession">
-            {labels.parentsProfession}
-          </label>
-          <input
-            id="parentsProfession"
-            name="parentsProfession"
-            required
-            minLength={APPLY_LIMITS.parentsProfession.min}
-            maxLength={APPLY_LIMITS.parentsProfession.max}
-            className={fieldClass}
-          />
-        </div>
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor="householdIncome">
-            {labels.householdIncome}
-          </label>
-          <input
-            id="householdIncome"
-            name="householdIncome"
-            type="number"
-            min={APPLY_LIMITS.householdIncome.min}
-            max={APPLY_LIMITS.householdIncome.max}
-            step={1}
-            required
-            inputMode="numeric"
-            className={fieldClass}
-          />
-        </div>
-      </div>
-
-      {error ? (
+      {submitError ? (
         <p
           className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
           role="alert"
         >
-          {error}
+          {submitError}
         </p>
       ) : null}
 
