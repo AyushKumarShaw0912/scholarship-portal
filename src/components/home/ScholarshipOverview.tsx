@@ -1,12 +1,15 @@
-import { homeContent, scholarships } from "@/data";
+import { getActiveScholarships, getHomeContent } from "@/lib/cms";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ScholarshipList } from "@/components/scholarship/ScholarshipList";
 import { Reveal } from "../common/Reveal";
 
-export function ScholarshipOverview() {
-  const { sections } = homeContent;
+export async function ScholarshipOverview() {
+  const [{ sections }, scholarships] = await Promise.all([
+    getHomeContent(),
+    getActiveScholarships(),
+  ]);
 
   return (
     <Section spacing="lg">

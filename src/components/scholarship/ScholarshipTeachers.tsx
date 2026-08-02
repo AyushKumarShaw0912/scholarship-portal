@@ -1,6 +1,6 @@
 import type { Scholarship } from "@/types";
 
-import { scholarshipPageContent } from "@/data";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ContentCard } from "@/components/common/ContentCard";
 
@@ -8,11 +8,15 @@ interface ScholarshipTeachersProps {
   readonly scholarship: Scholarship;
 }
 
-export function ScholarshipTeachers({ scholarship }: ScholarshipTeachersProps) {
+export async function ScholarshipTeachers({
+  scholarship,
+}: ScholarshipTeachersProps) {
+  const pageContent = await getScholarshipPageContent();
+
   return (
     <div>
       <SectionHeading
-        title={scholarshipPageContent.detail.sectionTitles.faculty}
+        title={pageContent.detail.sectionTitles.faculty}
         align="left"
       />
 

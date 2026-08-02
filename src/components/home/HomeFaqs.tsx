@@ -1,4 +1,5 @@
-import { getFaqHomePreview, homeContent, uiCopy } from "@/data";
+import { getFaqHomePreview, getHomeContent } from "@/lib/cms";
+import { uiCopy } from "@/data";
 import { ROUTES } from "@/constants/routes";
 
 import { CtaLink } from "@/components/actions/CtaLink";
@@ -7,9 +8,11 @@ import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container, Section } from "@/layout";
 
-export function HomeFaqs() {
-  const { sections } = homeContent;
-  const items = getFaqHomePreview();
+export async function HomeFaqs() {
+  const [{ sections }, items] = await Promise.all([
+    getHomeContent(),
+    getFaqHomePreview(),
+  ]);
 
   return (
     <Section spacing="lg">

@@ -1,12 +1,12 @@
-import { homeContent } from "@/data";
+import { getHomeContent } from "@/lib/cms";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { StepCard } from "@/components/common/StepCard";
 import { Reveal } from "../common/Reveal";
 
-export function ApplicationProcess() {
-  const { applicationSteps, sections } = homeContent;
+export async function ApplicationProcess() {
+  const { applicationSteps, sections } = await getHomeContent();
 
   return (
     <Section spacing="lg">

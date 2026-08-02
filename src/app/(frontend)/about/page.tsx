@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config";
-import { aboutContent } from "@/data";
+import {
+  getAboutContent,
+  getSiteSettings,
+} from "@/lib/cms";
 
 import { Container, Section } from "@/layout";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Reveal } from "@/components/common/Reveal";
 
-export const metadata: Metadata = {
-  title: `${aboutContent.meta.title} | ${siteConfig.name}`,
-  description: aboutContent.meta.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [about, site] = await Promise.all([
+    getAboutContent(),
+    getSiteSettings(),
+  ]);
 
-export default function AboutPage() {
-  const { heading, sections } = aboutContent;
+  return {
+    title: `${about.meta.title} | ${site.name}`,
+    description: about.meta.description,
+  };
+}
+
+export default async function AboutPage() {
+  const { heading, sections } = await getAboutContent();
 
   return (
     <Section spacing="lg">

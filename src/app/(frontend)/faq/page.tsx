@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config";
-import { faqContent } from "@/data";
+import { getFaqContent, getSiteSettings } from "@/lib/cms";
 
 import { FaqList } from "@/components/common/FaqList";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container, Section } from "@/layout";
 
-export const metadata: Metadata = {
-  title: `${faqContent.meta.title} | ${siteConfig.name}`,
-  description: faqContent.meta.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [faq, site] = await Promise.all([getFaqContent(), getSiteSettings()]);
 
-export default function FaqPage() {
-  const { heading, items } = faqContent;
+  return {
+    title: `${faq.meta.title} | ${site.name}`,
+    description: faq.meta.description,
+  };
+}
+
+export default async function FaqPage() {
+  const { heading, items } = await getFaqContent();
 
   return (
     <Section spacing="lg">

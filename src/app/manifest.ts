@@ -1,25 +1,19 @@
 import type { MetadataRoute } from "next";
 
-import { siteConfig } from "@/config";
+import { getSiteSettings } from "@/lib/cms";
 
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const site = await getSiteSettings();
+
   return {
-    name: siteConfig.name,
-
-    short_name: siteConfig.shortName,
-
-    description: siteConfig.description,
-
+    name: site.name,
+    short_name: site.shortName,
+    description: site.description,
     start_url: "/",
-
     display: "standalone",
-
     background_color: "#ffffff",
-
     theme_color: "#2563eb",
-
     lang: "en",
-
     icons: [
       {
         src: "/icon-192.png",

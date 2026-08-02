@@ -1,11 +1,13 @@
-import { scholarships } from "@/data";
+import { getScholarships } from "@/lib/cms";
 
 import { Reveal } from "@/components/common/Reveal";
 import { Container, Section } from "@/layout";
 
 import { ScholarshipList } from "./ScholarshipList";
 
-export function ScholarshipGrid() {
+export async function ScholarshipGrid() {
+  const scholarships = await getScholarships();
+
   return (
     <Section>
       <Container>

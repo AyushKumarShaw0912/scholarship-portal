@@ -2,7 +2,7 @@ import { CheckCircle2 } from "lucide-react";
 
 import type { Scholarship } from "@/types";
 
-import { scholarshipPageContent } from "@/data";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ContentCard } from "@/components/common/ContentCard";
 
@@ -10,11 +10,15 @@ interface ScholarshipBenefitsProps {
   readonly scholarship: Scholarship;
 }
 
-export function ScholarshipBenefits({ scholarship }: ScholarshipBenefitsProps) {
+export async function ScholarshipBenefits({
+  scholarship,
+}: ScholarshipBenefitsProps) {
+  const pageContent = await getScholarshipPageContent();
+
   return (
     <div>
       <SectionHeading
-        title={scholarshipPageContent.detail.sectionTitles.benefits}
+        title={pageContent.detail.sectionTitles.benefits}
         align="left"
       />
 

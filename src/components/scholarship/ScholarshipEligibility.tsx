@@ -1,6 +1,6 @@
 import type { Scholarship } from "@/types";
 
-import { scholarshipPageContent } from "@/data";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Checklist } from "@/components/common/Checklist";
 
@@ -8,13 +8,15 @@ interface ScholarshipEligibilityProps {
   readonly scholarship: Scholarship;
 }
 
-export function ScholarshipEligibility({
+export async function ScholarshipEligibility({
   scholarship,
 }: ScholarshipEligibilityProps) {
+  const pageContent = await getScholarshipPageContent();
+
   return (
     <div>
       <SectionHeading
-        title={scholarshipPageContent.detail.sectionTitles.eligibility}
+        title={pageContent.detail.sectionTitles.eligibility}
         align="left"
       />
 
