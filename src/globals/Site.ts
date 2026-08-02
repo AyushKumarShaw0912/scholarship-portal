@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { authenticated, authenticatedOrPublished } from "@/access";
+import { revalidateSiteGlobal } from "@/cms/revalidate";
 import { contentVersions } from "@/cms/versions";
 import { navLinkFields } from "@/fields";
 
@@ -11,6 +12,9 @@ export const Site: GlobalConfig = {
   access: {
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateSiteGlobal],
   },
   fields: [
     {

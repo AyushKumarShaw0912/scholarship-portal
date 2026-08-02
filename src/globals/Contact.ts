@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { authenticated, authenticatedOrPublished } from "@/access";
+import { revalidateContactGlobal } from "@/cms/revalidate";
 import { contentVersions } from "@/cms/versions";
 import { iconSelectField, sectionCopyFields } from "@/fields";
 
@@ -11,6 +12,9 @@ export const Contact: GlobalConfig = {
   access: {
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateContactGlobal],
   },
   fields: [
     sectionCopyFields({ name: "meta", label: "SEO Meta", descriptionRequired: true }),

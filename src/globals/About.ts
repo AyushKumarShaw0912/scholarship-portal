@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { authenticated, authenticatedOrPublished } from "@/access";
+import { revalidateAboutGlobal } from "@/cms/revalidate";
 import { contentVersions } from "@/cms/versions";
 import { sectionCopyFields, stringListField } from "@/fields";
 
@@ -11,6 +12,9 @@ export const About: GlobalConfig = {
   access: {
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateAboutGlobal],
   },
   fields: [
     sectionCopyFields({ name: "meta", label: "SEO Meta", descriptionRequired: true }),

@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scholarship Portal
+
+Next.js + Payload CMS (Postgres / Neon).
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+# Configure .env.local (see .env.example) — use a LOCAL Neon branch, not production
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Admin: [/admin](http://localhost:3000/admin).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Optional bootstrap of demo content (local / empty DB only):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm seed
+```
 
-## Learn More
+## Environments
 
-To learn more about Next.js, take a look at the following resources:
+| Env | Neon DB | Schema updates |
+|---|---|---|
+| Local (`pnpm dev`) | Local branch in `.env.local` | Auto **push** (fine) |
+| Production (Vercel) | Production branch in Vercel env | **`payload migrate`** only |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Never point local `.env.local` at the production database.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy / Vercel
 
-## Deploy on Vercel
+Set Build Command to:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm ci
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+That runs:
+
+1. Clear Payload `batch = -1` dev markers (no data deleted)
+2. `payload migrate` (additive schema only)
+3. `pnpm build`
+
+Required env on Vercel: `DATABASE_URL`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_APP_URL`.
+
+### First deploy after migrations (existing prod schema)
+
+If production already has tables from earlier push and the baseline has not been recorded yet:
+
+1. Temporarily point a local shell at the **production** URL (or use Neon SQL)
+2. Run `pnpm migrate:mark-baseline` against that URL **only if** `public.site` already exists
+3. Or let the first `pnpm ci` run — baseline `up` **skips CREATE** when `public.site` exists, so data is preserved
+
+## Schema change workflow
+
+1. Edit collections/globals locally → `pnpm dev` (push updates local DB)
+2. When ready to ship:
+   ```bash
+   pnpm payload migrate:create short-description
+   ```
+3. Review generated SQL — do **not** commit destructive `DROP` in `up`
+4. Commit `src/migrations/` and deploy
+
+Content-only edits: change in `/admin` and publish. Revalidation hooks refresh the public site without rebuilding.
+
+## Hard bans (production)
+
+- `DROP SCHEMA` / wiping the DB
+- `pnpm payload migrate:fresh` / `migrate:reset` / `migrate:refresh`
+- `pnpm seed` against a DB with real content
+- Sharing one Neon branch for local + production
