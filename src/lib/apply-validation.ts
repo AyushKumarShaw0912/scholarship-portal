@@ -297,7 +297,7 @@ export type ParsedApplicationInput = ApplicationInput & {
 
 /**
  * Trend from Class 8 → 9 → 10 board %.
- * trendScore = average percentage-point change per year-step.
+ * trendScore = weighted average of percentage-point changes (1:2 for 8→9 vs 9→10 board).
  */
 export function computeAcademicTrend(input: {
   class8Percentage: number;
@@ -309,7 +309,7 @@ export function computeAcademicTrend(input: {
     (input.class10TotalMarks / input.class10MaxMarks) * 100;
   const delta89 = input.class9Percentage - input.class8Percentage;
   const delta910 = class10Percentage - input.class9Percentage;
-  const trendScore = Math.round(((delta89 + delta910) / 2) * 100) / 100;
+  const trendScore = Math.round(((delta89 + 2 * delta910) / 3) * 100) / 100;
 
   let academicTrend: AcademicTrend = "stable";
   if (trendScore >= 2) {
