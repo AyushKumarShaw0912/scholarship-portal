@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import type { Scholarship } from "@/types";
 
 import { uiCopy } from "@/data";
-import { getSiteSettings } from "@/lib/cms";
+import { getApplyPath } from "@/lib/apply";
 import { ROUTES } from "@/constants/routes";
 import { Container, Section } from "@/layout";
 import { CtaLink } from "@/components/actions/CtaLink";
@@ -16,8 +16,6 @@ interface ScholarshipHeaderProps {
 export async function ScholarshipHeader({
   scholarship,
 }: ScholarshipHeaderProps) {
-  const site = await getSiteSettings();
-
   return (
     <Section spacing="lg">
       <Container>
@@ -45,11 +43,9 @@ export async function ScholarshipHeader({
 
             <div className="motion-enter motion-delay-4 flex flex-col gap-4 pt-4 sm:flex-row">
               <CtaLink
-                href={site.applyUrl}
+                href={getApplyPath()}
                 label={uiCopy.applyNow}
                 appearance="hero"
-                external
-                showExternalIcon
               />
 
               <CtaLink

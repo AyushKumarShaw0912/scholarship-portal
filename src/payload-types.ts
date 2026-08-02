@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     scholarships: Scholarship;
+    applications: Application;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     scholarships: ScholarshipsSelect<false> | ScholarshipsSelect<true>;
+    applications: ApplicationsSelect<false> | ApplicationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -96,6 +98,7 @@ export interface Config {
     contact: Contact;
     faq: Faq;
     'scholarship-page': ScholarshipPage;
+    apply: Apply;
   };
   globalsSelect: {
     site: SiteSelect<false> | SiteSelect<true>;
@@ -104,6 +107,7 @@ export interface Config {
     contact: ContactSelect<false> | ContactSelect<true>;
     faq: FaqSelect<false> | FaqSelect<true>;
     'scholarship-page': ScholarshipPageSelect<false> | ScholarshipPageSelect<true>;
+    apply: ApplySelect<false> | ApplySelect<true>;
   };
   locale: null;
   widgets: {
@@ -176,6 +180,24 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    logo?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -187,7 +209,6 @@ export interface Scholarship {
   slug: string;
   shortDescription: string;
   description: string;
-  applyUrl: string;
   isActive?: boolean | null;
   eligibility: {
     value: string;
@@ -228,6 +249,59 @@ export interface Scholarship {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications".
+ */
+export interface Application {
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  guardianPhone: string;
+  target: 'jee' | 'neet';
+  board: 'wbbse' | 'cbse' | 'icse' | 'other';
+  schoolName: string;
+  class8Percentage: number;
+  class9Percentage: number;
+  class10PreBoardPercentage: number;
+  class10TotalMarks: number;
+  class10MaxMarks: number;
+  subject1Name: string;
+  subject1Obtained: number;
+  subject1Max: number;
+  subject2Name: string;
+  subject2Obtained: number;
+  subject2Max: number;
+  subject3Name: string;
+  subject3Obtained: number;
+  subject3Max: number;
+  subject4Name: string;
+  subject4Obtained: number;
+  subject4Max: number;
+  subject5Name: string;
+  subject5Obtained: number;
+  subject5Max: number;
+  /**
+   * Auto-calculated from Class 8 → 9 → 10 percentages.
+   */
+  academicTrend: 'improving' | 'stable' | 'declining';
+  /**
+   * Auto-calculated average percentage-point change (Class 8→9 and 9→10).
+   */
+  trendScore: number;
+  academicAchievements?: string | null;
+  address: string;
+  parentsName: string;
+  parentsProfession: string;
+  /**
+   * Whole number amount in INR
+   */
+  householdIncome: number;
+  status: 'new' | 'reviewed' | 'shortlisted' | 'rejected';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -261,6 +335,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scholarships';
         value: number | Scholarship;
+      } | null)
+    | ({
+        relationTo: 'applications';
+        value: number | Application;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -343,6 +421,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        logo?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -353,7 +455,6 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   slug?: T;
   shortDescription?: T;
   description?: T;
-  applyUrl?: T;
   isActive?: T;
   eligibility?:
     | T
@@ -401,6 +502,49 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "applications_select".
+ */
+export interface ApplicationsSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phone?: T;
+  guardianPhone?: T;
+  target?: T;
+  board?: T;
+  schoolName?: T;
+  class8Percentage?: T;
+  class9Percentage?: T;
+  class10PreBoardPercentage?: T;
+  class10TotalMarks?: T;
+  class10MaxMarks?: T;
+  subject1Name?: T;
+  subject1Obtained?: T;
+  subject1Max?: T;
+  subject2Name?: T;
+  subject2Obtained?: T;
+  subject2Max?: T;
+  subject3Name?: T;
+  subject3Obtained?: T;
+  subject3Max?: T;
+  subject4Name?: T;
+  subject4Obtained?: T;
+  subject4Max?: T;
+  subject5Name?: T;
+  subject5Obtained?: T;
+  subject5Max?: T;
+  academicTrend?: T;
+  trendScore?: T;
+  academicAchievements?: T;
+  address?: T;
+  parentsName?: T;
+  parentsProfession?: T;
+  householdIncome?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -455,9 +599,12 @@ export interface Site {
   email: string;
   phone: string;
   address: string;
-  applyUrl: string;
-  logo: string;
-  favicon: string;
+  /**
+   * Deprecated. Apply CTAs use the in-app /apply form. Leave blank.
+   */
+  applyUrl?: string | null;
+  logo?: (number | null) | Media;
+  favicon?: (number | null) | Media;
   locale: string;
   author: string;
   keywords?:
@@ -660,6 +807,84 @@ export interface ScholarshipPage {
         id?: string | null;
       }[];
       footerNote: string;
+    };
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apply".
+ */
+export interface Apply {
+  id: number;
+  meta: {
+    title: string;
+    description: string;
+  };
+  heading: {
+    title: string;
+    description?: string | null;
+  };
+  form: {
+    labels: {
+      fullName: string;
+      email: string;
+      phone: string;
+      guardianPhone: string;
+      target: string;
+      board: string;
+      schoolName: string;
+      class8Percentage: string;
+      class9Percentage: string;
+      class10PreBoardPercentage: string;
+      class10TotalMarks: string;
+      class10MaxMarks: string;
+      subjectName: string;
+      subjectObtained: string;
+      subjectMax: string;
+      academicAchievements: string;
+      address: string;
+      parentsName: string;
+      parentsProfession: string;
+      householdIncome: string;
+      selectPlaceholder: string;
+    };
+    options: {
+      targetJee: string;
+      targetNeet: string;
+      boardWbbse: string;
+      boardCbse: string;
+      boardIcse: string;
+      boardOther: string;
+    };
+    sections: {
+      personalTitle: string;
+      familyTitle: string;
+      percentagesTitle: string;
+      percentagesHelp: string;
+      totalsTitle: string;
+      subjectsTitle: string;
+      subjectsHelp: string;
+    };
+    subjectDefaults: {
+      value: string;
+      id?: string | null;
+    }[];
+    success: {
+      title: string;
+      body: string;
+      resetLabel: string;
+    };
+    errors: {
+      submissionFailed: string;
+      network: string;
+      server: string;
+    };
+    submit: {
+      idle: string;
+      pending: string;
     };
   };
   _status?: ('draft' | 'published') | null;
@@ -921,6 +1146,104 @@ export interface ScholarshipPageSelect<T extends boolean = true> {
                     id?: T;
                   };
               footerNote?: T;
+            };
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apply_select".
+ */
+export interface ApplySelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  heading?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  form?:
+    | T
+    | {
+        labels?:
+          | T
+          | {
+              fullName?: T;
+              email?: T;
+              phone?: T;
+              guardianPhone?: T;
+              target?: T;
+              board?: T;
+              schoolName?: T;
+              class8Percentage?: T;
+              class9Percentage?: T;
+              class10PreBoardPercentage?: T;
+              class10TotalMarks?: T;
+              class10MaxMarks?: T;
+              subjectName?: T;
+              subjectObtained?: T;
+              subjectMax?: T;
+              academicAchievements?: T;
+              address?: T;
+              parentsName?: T;
+              parentsProfession?: T;
+              householdIncome?: T;
+              selectPlaceholder?: T;
+            };
+        options?:
+          | T
+          | {
+              targetJee?: T;
+              targetNeet?: T;
+              boardWbbse?: T;
+              boardCbse?: T;
+              boardIcse?: T;
+              boardOther?: T;
+            };
+        sections?:
+          | T
+          | {
+              personalTitle?: T;
+              familyTitle?: T;
+              percentagesTitle?: T;
+              percentagesHelp?: T;
+              totalsTitle?: T;
+              subjectsTitle?: T;
+              subjectsHelp?: T;
+            };
+        subjectDefaults?:
+          | T
+          | {
+              value?: T;
+              id?: T;
+            };
+        success?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              resetLabel?: T;
+            };
+        errors?:
+          | T
+          | {
+              submissionFailed?: T;
+              network?: T;
+              server?: T;
+            };
+        submit?:
+          | T
+          | {
+              idle?: T;
+              pending?: T;
             };
       };
   _status?: T;

@@ -8,7 +8,6 @@ type ScholarshipDoc = {
   title?: string | null;
   shortDescription?: string | null;
   description?: string | null;
-  applyUrl?: string | null;
   isActive?: boolean | null;
   eligibility?: { value?: string | null }[] | null;
   benefits?:
@@ -46,8 +45,7 @@ export function toScholarship(doc: ScholarshipDoc): Scholarship | null {
     !hasText(doc.slug) ||
     !hasText(doc.title) ||
     !hasText(doc.shortDescription) ||
-    !hasText(doc.description) ||
-    !hasText(doc.applyUrl)
+    !hasText(doc.description)
   ) {
     return null;
   }
@@ -135,7 +133,6 @@ export function toScholarship(doc: ScholarshipDoc): Scholarship | null {
     title: doc.title,
     shortDescription: doc.shortDescription,
     description: doc.description,
-    applyUrl: doc.applyUrl,
     isActive: doc.isActive ?? true,
     eligibility,
     benefits,
@@ -152,7 +149,6 @@ export function fromScholarship(scholarship: Scholarship) {
     slug: scholarship.slug,
     shortDescription: scholarship.shortDescription,
     description: scholarship.description,
-    applyUrl: scholarship.applyUrl,
     isActive: scholarship.isActive,
     eligibility: scholarship.eligibility.map((value) => ({ value })),
     benefits: scholarship.benefits.map((benefit) => ({

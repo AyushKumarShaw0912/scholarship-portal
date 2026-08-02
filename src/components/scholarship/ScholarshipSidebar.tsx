@@ -1,13 +1,11 @@
 import { uiCopy } from "@/data";
-import { getScholarshipPageContent, getSiteSettings } from "@/lib/cms";
+import { getApplyPath } from "@/lib/apply";
+import { getScholarshipPageContent } from "@/lib/cms";
 import { ContentCard } from "@/components/common/ContentCard";
 import { CtaLink } from "@/components/actions/CtaLink";
 
 export async function ScholarshipSidebar() {
-  const [{ detail }, site] = await Promise.all([
-    getScholarshipPageContent(),
-    getSiteSettings(),
-  ]);
+  const { detail } = await getScholarshipPageContent();
   const { sidebar } = detail;
 
   return (
@@ -33,11 +31,9 @@ export async function ScholarshipSidebar() {
         </div>
 
         <CtaLink
-          href={site.applyUrl}
+          href={getApplyPath()}
           label={uiCopy.applyNow}
           appearance="sidebar"
-          external
-          showExternalIcon
           className="mt-6"
         />
 

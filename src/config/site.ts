@@ -8,9 +8,11 @@ export const siteConfig = {
 
   url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 
-  logo: "/images/logo.svg",
+  /** No static logo asset — Brand falls back to Lucide when null. */
+  logoUrl: null as string | null,
 
-  favicon: "/favicon.ico",
+  /** No static favicon asset — metadata omits icons when null. */
+  faviconUrl: null as string | null,
 
   email: "futuresciencescholars@gmail.com",
 
@@ -19,7 +21,7 @@ export const siteConfig = {
   address: "India",
 
   copyright: `© ${new Date().getFullYear()} Scholarship Portal. All rights reserved.`,
-  applyUrl: process.env.NEXT_PUBLIC_APPLY_URL ?? "https://example.com/apply",
+  applyUrl: "/apply",
   tagline: "Empowering Future Scientists",
 
   locale: "en-IN",

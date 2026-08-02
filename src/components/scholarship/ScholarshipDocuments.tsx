@@ -36,6 +36,12 @@ export async function ScholarshipDocuments({
               <div>
                 <p className="font-medium">{document.title}</p>
 
+                {document.description ? (
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {document.description}
+                  </p>
+                ) : null}
+
                 <p className="text-sm text-muted-foreground">
                   {document.required ? uiCopy.required : uiCopy.optional}
                 </p>

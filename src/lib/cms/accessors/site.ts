@@ -13,8 +13,8 @@ function staticSiteSettings(): SiteSettings {
     shortName: staticSiteConfig.shortName,
     description: staticSiteConfig.description,
     url: staticSiteConfig.url,
-    logo: staticSiteConfig.logo,
-    favicon: staticSiteConfig.favicon,
+    logoUrl: staticSiteConfig.logoUrl,
+    faviconUrl: staticSiteConfig.faviconUrl,
     email: staticSiteConfig.email,
     phone: staticSiteConfig.phone,
     address: staticSiteConfig.address,
@@ -34,7 +34,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       const payload = await getPayloadClient();
       const doc = await payload.findGlobal({
         slug: "site",
-        depth: 0,
+        // Populate logo/favicon media so URLs are available
+        depth: 1,
         ...publicReadOptions,
       });
 

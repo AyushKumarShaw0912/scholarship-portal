@@ -3,6 +3,7 @@ import "dotenv/config";
 import { navigation } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { aboutContent } from "@/data/about";
+import { applyContent } from "@/data/apply";
 import { contactContent } from "@/data/contact";
 import { faqContent } from "@/data/faq";
 import { homeContent } from "@/data/home";
@@ -10,6 +11,7 @@ import { scholarshipPageContent } from "@/data/scholarship-page";
 import { scholarships } from "@/data/scholarships";
 import {
   fromAboutContent,
+  fromApplyContent,
   fromContactContent,
   fromFaqContent,
   fromHomeContent,
@@ -147,6 +149,10 @@ async function seedGlobals() {
         ...fromScholarshipPageContent(scholarshipPageContent),
         ...published,
       },
+    },
+    {
+      slug: "apply" as const,
+      data: { ...fromApplyContent(applyContent), ...published },
     },
   ];
 

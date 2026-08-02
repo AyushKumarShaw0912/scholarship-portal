@@ -1,5 +1,6 @@
 export {
   getAboutContent,
+  getApplyContent,
   getContactContent,
   getFaqContent,
   getFaqHomePreview,
@@ -17,6 +18,7 @@ export { getPayloadClient } from "./client";
 export { withCmsFallback } from "./fallback";
 export {
   fromAboutContent,
+  fromApplyContent,
   fromContactContent,
   fromFaqContent,
   fromHomeContent,
@@ -24,6 +26,7 @@ export {
   fromScholarshipPageContent,
   fromSiteSettings,
   toAboutContent,
+  toApplyContent,
   toContactContent,
   toFaqContent,
   toHomeContent,

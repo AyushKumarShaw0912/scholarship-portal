@@ -1,6 +1,7 @@
 export * from "./home";
 export * from "./scholarships";
 export * from "./about";
+export * from "./apply";
 export * from "./contact";
 export * from "./faq";
 export * from "./ui";

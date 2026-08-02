@@ -2,6 +2,9 @@ export {
   getAboutContent,
 } from "./about";
 export {
+  getApplyContent,
+} from "./apply";
+export {
   getContactContent,
 } from "./contact";
 export {

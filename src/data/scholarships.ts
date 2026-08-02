@@ -1,4 +1,4 @@
-import type { Scholarship } from "@/types";
+﻿import type { Scholarship } from "@/types";
 
 export const scholarships: Scholarship[] = [
   {
@@ -14,14 +14,12 @@ export const scholarships: Scholarship[] = [
     description:
       "The Fazil Science Scholarship for Girls supports academically promising female students by covering the complete tuition fees for science coaching and providing career guidance for higher education.",
 
-    applyUrl: "https://forms.google.com/YOUR_FORM_LINK",
-
     isActive: true,
 
     eligibility: [
       "Female student",
-      "Passed Class 10",
-      "Class 11 (Science) student",
+      "Passed Class 10 (WBBSE / CBSE / ICSE or equivalent)",
+      "Class 11 or 12 Science student (PCM / PCB) in West Bengal",
       "Must qualify the scholarship selection examination",
     ],
 
@@ -61,30 +59,26 @@ export const scholarships: Scholarship[] = [
 
     requiredDocuments: [
       {
-        id: "class10",
-        title: "Class 10 Board Marksheet",
+        id: "class-marks",
+        title: "Class 8, 9 percentages and Class 10 board marks (5 subjects + totals)",
+        description: "Entered in the online application form — no marksheet upload",
         required: true,
       },
       {
-        id: "preboard",
-        title: "Class 10 Pre-board Marksheet",
-        required: true,
-      },
-      {
-        id: "class89",
-        title: "Class 8 & Class 9 Marksheets",
+        id: "class-board-school",
+        title: "Board and school name",
         required: true,
       },
       {
         id: "achievement",
-        title: "Academic Achievement Certificates (if any)",
+        title: "Academic achievements (optional notes)",
         required: false,
       },
     ],
 
     selectionProcess: [
-      "Submit the application form",
-      "Document verification",
+      "Submit the online application with Class 10 marks",
+      "Marks and details review",
       "Scholarship selection examination",
       "Final merit-based selection",
     ],
@@ -103,13 +97,11 @@ export const scholarships: Scholarship[] = [
     description:
       "The Shaw Foundation for Future Science Scholars aims to help meritorious students prepare for engineering and medical entrance examinations by providing complete coaching support and academic guidance.",
 
-    applyUrl: "https://forms.google.com/YOUR_FORM_LINK",
-
     isActive: true,
 
     eligibility: [
-      "Completed Class 10",
-      "Taking admission in Class 11 (Science)",
+      "Completed Class 10 (WBBSE / CBSE / ICSE or equivalent)",
+      "Class 11 or 12 Science student (PCM / PCB) in West Bengal",
       "Selection based on merit and scholarship examination",
     ],
 
@@ -149,29 +141,26 @@ export const scholarships: Scholarship[] = [
 
     requiredDocuments: [
       {
-        id: "class10",
-        title: "Class 10 Board Marksheet",
+        id: "class-marks",
+        title: "Class 8, 9 percentages and Class 10 board marks (5 subjects + totals)",
+        description: "Entered in the online application form — no marksheet upload",
         required: true,
       },
       {
-        id: "preboard",
-        title: "Class 10 Pre-board Marksheet",
-        required: true,
-      },
-      {
-        id: "class89",
-        title: "Class 8 & Class 9 Marksheets",
+        id: "class-board-school",
+        title: "Board and school name",
         required: true,
       },
       {
         id: "achievement",
-        title: "Academic Achievement Certificates (if any)",
+        title: "Academic achievements (optional notes)",
         required: false,
       },
     ],
 
     selectionProcess: [
-      "Application review",
+      "Submit the online application with Class 10 marks",
+      "Marks and details review",
       "Selection examination",
       "Merit list",
     ],

@@ -33,22 +33,22 @@ export function Navbar({ site, navigation }: NavbarProps) {
     >
       <Container>
         <div className="flex h-[4.5rem] items-center justify-between">
-          <Brand shortName={site.shortName} tagline={site.tagline} />
+          <Brand
+            shortName={site.shortName}
+            tagline={site.tagline}
+            logoUrl={site.logoUrl}
+          />
 
           <DesktopNav pathname={pathname} items={navigation} />
 
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
 
-            <ApplyButton
-              href={site.applyUrl}
-              className="hidden lg:inline-flex"
-            />
+            <ApplyButton className="hidden lg:inline-flex" />
 
             <MobileNav
               pathname={pathname}
               items={navigation}
-              applyUrl={site.applyUrl}
             />
           </div>
         </div>

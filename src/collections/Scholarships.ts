@@ -43,11 +43,6 @@ export const Scholarships: CollectionConfig = {
       required: true,
     },
     {
-      name: "applyUrl",
-      type: "text",
-      required: true,
-    },
-    {
       name: "isActive",
       type: "checkbox",
       defaultValue: true,

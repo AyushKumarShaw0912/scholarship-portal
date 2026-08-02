@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CtaLink } from "@/components/actions/CtaLink";
+import { getApplyPath } from "@/lib/apply";
 
 interface ScholarshipCardProps {
   readonly scholarship: Scholarship;
@@ -48,10 +49,9 @@ export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
         </Link>
 
         <CtaLink
-          href={scholarship.applyUrl}
+          href={getApplyPath()}
           label={uiCopy.apply}
           appearance="card"
-          external
         />
       </CardFooter>
     </Card>

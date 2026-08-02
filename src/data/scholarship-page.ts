@@ -13,7 +13,7 @@ export const scholarshipPageContent = {
     description:
       "Explore our scholarship programs designed to support talented students pursuing science education and competitive entrance examination preparation.",
     metaDescription:
-      "Browse all available scholarships, review eligibility, benefits, required documents and application details.",
+      "Browse all available scholarships, review eligibility, benefits, application details and Class 10 marks requirements.",
   },
 
   detail: {
@@ -21,7 +21,7 @@ export const scholarshipPageContent = {
       benefits: "Scholarship Benefits",
       eligibility: "Eligibility",
       faculty: "Faculty",
-      documents: "Required Documents",
+      documents: "What you'll need to apply",
       selectionProcess: "Selection Process",
     },
 
@@ -39,7 +39,7 @@ export const scholarshipPageContent = {
           icon: Trophy,
         },
         {
-          label: "Required Documents Verification",
+          label: "Class 10 Marks Review",
           icon: FileText,
         },
       ],

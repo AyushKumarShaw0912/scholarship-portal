@@ -5,6 +5,19 @@ import type { navigation } from "@/config/navigation";
 
 import { hasText, mapStringList, toStringList } from "./utils";
 
+type MediaRef =
+  | number
+  | string
+  | {
+      url?: string | null;
+      sizes?: {
+        logo?: { url?: string | null } | null;
+        thumbnail?: { url?: string | null } | null;
+      } | null;
+    }
+  | null
+  | undefined;
+
 type SiteDoc = {
   name?: string | null;
   shortName?: string | null;
@@ -14,8 +27,8 @@ type SiteDoc = {
   phone?: string | null;
   address?: string | null;
   applyUrl?: string | null;
-  logo?: string | null;
-  favicon?: string | null;
+  logo?: MediaRef;
+  favicon?: MediaRef;
   locale?: string | null;
   author?: string | null;
   keywords?: { value?: string | null }[] | null;
@@ -27,6 +40,25 @@ type SiteDoc = {
     | null;
 };
 
+function mediaUrl(
+  value: MediaRef,
+  preferredSize?: "logo" | "thumbnail",
+): string | null {
+  if (!value || typeof value === "number" || typeof value === "string") {
+    return null;
+  }
+
+  if (preferredSize === "logo" && hasText(value.sizes?.logo?.url)) {
+    return value.sizes.logo.url;
+  }
+
+  if (preferredSize === "thumbnail" && hasText(value.sizes?.thumbnail?.url)) {
+    return value.sizes.thumbnail.url;
+  }
+
+  return hasText(value.url) ? value.url : null;
+}
+
 export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
   if (
     !hasText(doc.name) ||
@@ -36,7 +68,6 @@ export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
     !hasText(doc.email) ||
     !hasText(doc.phone) ||
     !hasText(doc.address) ||
-    !hasText(doc.applyUrl) ||
     !hasText(doc.author)
   ) {
     return null;
@@ -67,13 +98,13 @@ export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
     shortName: doc.shortName,
     description: doc.description,
     url: getAppUrl(),
-    logo: doc.logo || "/images/logo.svg",
-    favicon: doc.favicon || "/favicon.ico",
+    logoUrl: mediaUrl(doc.logo, "logo"),
+    faviconUrl: mediaUrl(doc.favicon),
     email: doc.email,
     phone: doc.phone,
     address: doc.address,
     copyright: `© ${year} ${doc.name}. All rights reserved.`,
-    applyUrl: doc.applyUrl || getApplyUrl(),
+    applyUrl: getApplyUrl(),
     tagline: doc.tagline,
     locale: doc.locale || "en-IN",
     author: doc.author,
@@ -94,9 +125,7 @@ export function fromSiteSettings(
     email: site.email,
     phone: site.phone,
     address: site.address,
-    applyUrl: site.applyUrl || getApplyUrl(),
-    logo: site.logo,
-    favicon: site.favicon,
+    applyUrl: getApplyUrl(),
     locale: site.locale,
     author: site.author,
     keywords: toStringList([...site.keywords]),
