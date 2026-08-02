@@ -1,6 +1,10 @@
 import type { CollectionConfig } from "payload";
 
 import { authenticated, authenticatedOrPublished } from "@/access";
+import {
+  revalidateScholarshipAfterChange,
+  revalidateScholarshipAfterDelete,
+} from "@/cms/revalidate";
 import { contentVersions } from "@/cms/versions";
 import { slugField, stringListField } from "@/fields";
 
@@ -16,6 +20,10 @@ export const Scholarships: CollectionConfig = {
     delete: authenticated,
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateScholarshipAfterChange],
+    afterDelete: [revalidateScholarshipAfterDelete],
   },
   fields: [
     {

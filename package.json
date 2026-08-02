@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "ci": "node scripts/clear-dev-migration-markers.mjs && cross-env NODE_OPTIONS=--no-deprecation payload migrate && pnpm build",
+    "migrate:mark-baseline": "node --env-file=.env.local scripts/mark-baseline-applied.mjs",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "lint": "eslint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",

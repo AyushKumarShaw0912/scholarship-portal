@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { authenticated, authenticatedOrPublished } from "@/access";
+import { revalidateScholarshipPageGlobal } from "@/cms/revalidate";
 import { contentVersions } from "@/cms/versions";
 import { iconSelectField, sectionCopyFields } from "@/fields";
 
@@ -11,6 +12,9 @@ export const ScholarshipPage: GlobalConfig = {
   access: {
     read: authenticatedOrPublished,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateScholarshipPageGlobal],
   },
   fields: [
     {

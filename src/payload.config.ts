@@ -36,6 +36,9 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || "",
     },
+    // Local: push stays enabled in development. Production schema changes
+    // run via `pnpm ci` (`payload migrate && pnpm build`) on Vercel.
+    migrationDir: path.resolve(dirname, "migrations"),
   }),
   sharp,
 });
