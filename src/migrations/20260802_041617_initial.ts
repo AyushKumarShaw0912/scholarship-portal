@@ -6,7 +6,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   const existing = await db.execute(sql`
     SELECT to_regclass('public.site') AS reg
   `)
-  const reg = (existing as { rows?: Array<{ reg: string | null }> }).rows?.[0]?.reg
+  const reg = (existing as unknown as { rows?: Array<{ reg: string | null }> })
+    .rows?.[0]?.reg
 
   if (reg) {
     payload.logger.info(
