@@ -56,10 +56,31 @@ export const Site: GlobalConfig = {
       name: "applyUrl",
       type: "text",
       required: false,
+      label: "Shortlist Google Form URL",
       admin: {
         description:
-          "Deprecated. Apply CTAs use the in-app /apply form. Leave blank.",
+          "Google Form link emailed to selected shortlisted applicants for follow-up details and documents. Public Apply CTAs still use the in-app /apply form.",
         position: "sidebar",
+      },
+    },
+    {
+      name: "shortlistEmailSubject",
+      type: "text",
+      required: false,
+      label: "Shortlist email subject",
+      defaultValue: "Next step: complete your scholarship form",
+      admin: {
+        description: "Subject line for the Google Form invite email.",
+      },
+    },
+    {
+      name: "shortlistEmailBody",
+      type: "richText",
+      required: false,
+      label: "Shortlist email body",
+      admin: {
+        description:
+          "Email body sent to selected shortlisted applicants. Use {{fullName}} and {{formUrl}} as placeholders.",
       },
     },
     {

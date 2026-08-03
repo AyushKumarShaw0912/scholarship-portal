@@ -83,7 +83,7 @@ export const Applications: CollectionConfig = {
     group: "Submissions",
     components: {
       beforeListTable: [
-        "/components/payload/ApplicationsExportButton#ApplicationsExportButton",
+        "/components/payload/ApplicationsListActions#ApplicationsListActions",
       ],
     },
   },
@@ -311,6 +311,23 @@ export const Applications: CollectionConfig = {
       },
       admin: {
         position: "sidebar",
+      },
+    },
+    {
+      name: "formInviteSentAt",
+      type: "date",
+      label: "Form invite sent",
+      admin: {
+        position: "sidebar",
+        readOnly: true,
+        description: "Set automatically when the Google Form invite email is sent.",
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+      },
+      access: {
+        create: () => false,
+        update: () => false,
       },
     },
   ],
