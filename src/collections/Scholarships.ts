@@ -43,6 +43,16 @@ export const Scholarships: CollectionConfig = {
       required: true,
     },
     {
+      name: "logo",
+      type: "upload",
+      relationTo: "media",
+      required: false,
+      admin: {
+        description:
+          "Optional scholarship logo. When empty, cards and headers keep the default layout.",
+      },
+    },
+    {
       name: "isActive",
       type: "checkbox",
       defaultValue: true,

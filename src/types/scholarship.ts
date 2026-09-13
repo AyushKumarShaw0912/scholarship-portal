@@ -11,6 +11,9 @@ export interface Scholarship {
 
   description: string;
 
+  /** Optional CMS logo URL; when absent, UI keeps the default layout. */
+  logoUrl?: string | null;
+
   isActive: boolean;
 
   eligibility: string[];

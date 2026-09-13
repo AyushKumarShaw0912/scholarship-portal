@@ -3,6 +3,7 @@ export { fromApplyContent, toApplyContent } from "./apply";
 export { fromContactContent, toContactContent } from "./contact";
 export { fromFaqContent, toFaqContent } from "./faq";
 export { fromHomeContent, toHomeContent } from "./home";
+export { mediaUrl } from "./media";
 export { fromScholarship, toScholarship } from "./scholarship";
 export {
   fromScholarshipPageContent,
@@ -10,3 +11,4 @@ export {
 } from "./scholarship-page";
 export { fromSiteSettings, toSiteSettings } from "./site";
 export { mapStringList, toStringList } from "./utils";
+

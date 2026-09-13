@@ -1,5 +1,6 @@
 import type { Scholarship } from "@/types";
 
+import { type MediaRef, mediaUrl } from "./media";
 import { hasText, mapStringList } from "./utils";
 
 type ScholarshipDoc = {
@@ -8,6 +9,7 @@ type ScholarshipDoc = {
   title?: string | null;
   shortDescription?: string | null;
   description?: string | null;
+  logo?: MediaRef;
   isActive?: boolean | null;
   eligibility?: { value?: string | null }[] | null;
   benefits?:
@@ -133,6 +135,7 @@ export function toScholarship(doc: ScholarshipDoc): Scholarship | null {
     title: doc.title,
     shortDescription: doc.shortDescription,
     description: doc.description,
+    logoUrl: mediaUrl(doc.logo, "logo"),
     isActive: doc.isActive ?? true,
     eligibility,
     benefits,

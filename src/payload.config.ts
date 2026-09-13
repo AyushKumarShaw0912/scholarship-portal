@@ -3,6 +3,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import path from "path";
 import { buildConfig } from "payload";
+import { cloudinaryStorage } from "payload-storage-cloudinary";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
@@ -20,8 +21,16 @@ import {
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim();
+const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY?.trim();
+const cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET?.trim();
+const useCloudinary = Boolean(
+  cloudinaryCloudName && cloudinaryApiKey && cloudinaryApiSecret,
+);
+
 const r2Bucket = process.env.R2_BUCKET;
 const r2PublicUrl = process.env.R2_PUBLIC_URL?.replace(/\/$/, "");
+const useR2 = !useCloudinary && Boolean(r2Bucket);
 
 export default buildConfig({
   admin: {
@@ -47,8 +56,27 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    ...(useCloudinary
+      ? [
+          cloudinaryStorage({
+            cloudConfig: {
+              cloud_name: cloudinaryCloudName,
+              api_key: cloudinaryApiKey,
+              api_secret: cloudinaryApiSecret,
+            },
+            collections: {
+              media: {
+                folder: "scholarship-portal",
+                transformations: {
+                  preserveOriginal: true,
+                },
+              },
+            },
+          }),
+        ]
+      : []),
     s3Storage({
-      enabled: Boolean(r2Bucket),
+      enabled: useR2,
       bucket: r2Bucket || "",
       collections: {
         media: {

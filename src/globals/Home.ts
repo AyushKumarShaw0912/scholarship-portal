@@ -25,6 +25,26 @@ export const Home: GlobalConfig = {
         { name: "title", type: "text", required: true },
         { name: "highlightedTitle", type: "text", required: true },
         { name: "description", type: "textarea", required: true },
+        {
+          name: "announcementEnabled",
+          type: "checkbox",
+          defaultValue: true,
+          label: "Show announcement",
+          admin: {
+            description:
+              "When enabled, shows the announcement banner between the description and CTA buttons.",
+          },
+        },
+        {
+          name: "announcementMessage",
+          type: "text",
+          label: "Announcement message",
+          defaultValue: "APPLICATION ONGOING FOR 2027 - 2029 BATCH",
+          admin: {
+            description:
+              "Eye-catching banner text on the home hero. Leave empty to hide.",
+          },
+        },
         { name: "primaryCta", type: "text", required: true },
         { name: "secondaryCta", type: "text", required: true },
         {
@@ -59,6 +79,16 @@ export const Home: GlobalConfig = {
         { name: "title", type: "text", required: true },
         { name: "description", type: "textarea", required: true },
         iconSelectField(),
+        {
+          name: "image",
+          type: "upload",
+          relationTo: "media",
+          required: false,
+          admin: {
+            description:
+              "Optional image. When set, replaces the Lucide icon on the home benefit card.",
+          },
+        },
       ],
     },
     {

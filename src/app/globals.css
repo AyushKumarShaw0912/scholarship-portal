@@ -283,6 +283,33 @@
     }
   }
 
+  @keyframes announcement-pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+
+    70% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes announcement-sheen {
+    0% {
+      transform: translateX(-120%);
+    }
+
+    100% {
+      transform: translateX(120%);
+    }
+  }
+
   /* CSS-only page entrance — no client JS required */
   .motion-enter {
     animation: motion-fade-up var(--motion-duration) var(--motion-ease) both;
@@ -290,6 +317,20 @@
 
   .motion-enter-fade {
     animation: motion-fade-in var(--motion-duration) var(--motion-ease) both;
+  }
+
+  .announcement-pulse > span:first-child {
+    animation: announcement-pulse-ring 2s var(--motion-ease) infinite;
+  }
+
+  .announcement-sheen {
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      color-mix(in oklch, var(--primary) 14%, transparent) 50%,
+      transparent 65%
+    );
+    animation: announcement-sheen 3.6s var(--motion-ease) infinite;
   }
 
   .motion-delay-1 {
@@ -356,6 +397,11 @@ html[data-motion="off"] .motion-enter-fade {
   transform: none !important;
 }
 
+html[data-motion="off"] .announcement-pulse > span:first-child,
+html[data-motion="off"] .announcement-sheen {
+  animation: none !important;
+}
+
 html[data-motion="off"] .motion-lift,
 html[data-motion="off"] .motion-lift-sm {
   transition: none !important;
@@ -384,6 +430,11 @@ html[data-motion="off"] .motion-lift-sm:hover {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .announcement-pulse > span:first-child,
+  .announcement-sheen {
+    animation: none !important;
   }
 
   .motion-lift,

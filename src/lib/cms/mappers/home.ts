@@ -1,7 +1,11 @@
 import type { HomeContent } from "@/types";
 
 import { getCmsIconName, resolveCmsIcon } from "../icons";
+import { type MediaRef, mediaUrl } from "./media";
 import { hasText } from "./utils";
+
+const DEFAULT_ANNOUNCEMENT_MESSAGE =
+  "APPLICATION ONGOING FOR 2027 - 2029 BATCH";
 
 type HomeDoc = {
   hero?: {
@@ -9,6 +13,8 @@ type HomeDoc = {
     title?: string | null;
     highlightedTitle?: string | null;
     description?: string | null;
+    announcementEnabled?: boolean | null;
+    announcementMessage?: string | null;
     primaryCta?: string | null;
     secondaryCta?: string | null;
     stats?: { value?: string | null; label?: string | null }[] | null;
@@ -27,6 +33,7 @@ type HomeDoc = {
         title?: string | null;
         description?: string | null;
         icon?: string | null;
+        image?: MediaRef;
       }[]
     | null;
   applicationSteps?:
@@ -97,6 +104,7 @@ export function toHomeContent(doc: HomeDoc): HomeContent | null {
           title: benefit.title,
           description: benefit.description,
           icon: resolveCmsIcon(benefit.icon),
+          imageUrl: mediaUrl(benefit.image, "logo"),
         };
       })
       .filter((benefit): benefit is NonNullable<typeof benefit> =>
@@ -121,12 +129,19 @@ export function toHomeContent(doc: HomeDoc): HomeContent | null {
     return null;
   }
 
+  const announcementMessage =
+    hero.announcementMessage == null
+      ? DEFAULT_ANNOUNCEMENT_MESSAGE
+      : hero.announcementMessage.trim();
+
   return {
     hero: {
       badge: hero.badge,
       title: hero.title,
       highlightedTitle: hero.highlightedTitle,
       description: hero.description,
+      announcementEnabled: hero.announcementEnabled !== false,
+      announcementMessage,
       primaryCta: hero.primaryCta,
       secondaryCta: hero.secondaryCta,
       stats,
@@ -145,7 +160,14 @@ export function toHomeContent(doc: HomeDoc): HomeContent | null {
 export function fromHomeContent(content: HomeContent) {
   return {
     hero: {
-      ...content.hero,
+      badge: content.hero.badge,
+      title: content.hero.title,
+      highlightedTitle: content.hero.highlightedTitle,
+      description: content.hero.description,
+      announcementEnabled: content.hero.announcementEnabled,
+      announcementMessage: content.hero.announcementMessage,
+      primaryCta: content.hero.primaryCta,
+      secondaryCta: content.hero.secondaryCta,
       stats: content.hero.stats.map((stat) => ({
         value: stat.value,
         label: stat.label,

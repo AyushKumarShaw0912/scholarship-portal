@@ -27,6 +27,23 @@ function r2RemotePatterns(): NonNullable<
   }
 }
 
+function cloudinaryRemotePatterns(): NonNullable<
+  NonNullable<NextConfig["images"]>["remotePatterns"]
+> {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim();
+  if (!cloudName) {
+    return [];
+  }
+
+  return [
+    {
+      protocol: "https",
+      hostname: "res.cloudinary.com",
+      pathname: `/${cloudName}/**`,
+    },
+  ];
+}
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
   // Keep sharp as a native external so Vercel can load platform binaries.
@@ -37,7 +54,7 @@ const nextConfig: NextConfig = {
         pathname: "/api/media/file/**",
       },
     ],
-    remotePatterns: r2RemotePatterns(),
+    remotePatterns: [...r2RemotePatterns(), ...cloudinaryRemotePatterns()],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

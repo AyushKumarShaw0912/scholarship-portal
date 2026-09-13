@@ -15,6 +15,8 @@ import {
 import { CtaLink } from "@/components/actions/CtaLink";
 import { getApplyPath } from "@/lib/apply";
 
+import { ScholarshipLogo } from "./ScholarshipLogo";
+
 interface ScholarshipCardProps {
   readonly scholarship: Scholarship;
 }
@@ -23,14 +25,21 @@ export function ScholarshipCard({ scholarship }: ScholarshipCardProps) {
   return (
     <Card className="motion-lift group relative flex h-full flex-col overflow-hidden bg-card/90 backdrop-blur-[2px]">
       <CardHeader>
-        <CardTitle className="text-xl">
-          <Link
-            href={`${ROUTES.SCHOLARSHIPS}/${scholarship.slug}`}
-            className="after:absolute after:inset-0"
-          >
-            {scholarship.title}
-          </Link>
-        </CardTitle>
+        <div className="flex items-start gap-3">
+          <ScholarshipLogo
+            title={scholarship.title}
+            logoUrl={scholarship.logoUrl}
+            size="sm"
+          />
+          <CardTitle className="text-xl">
+            <Link
+              href={`${ROUTES.SCHOLARSHIPS}/${scholarship.slug}`}
+              className="after:absolute after:inset-0"
+            >
+              {scholarship.title}
+            </Link>
+          </CardTitle>
+        </div>
       </CardHeader>
 
       <CardContent className="flex-1">

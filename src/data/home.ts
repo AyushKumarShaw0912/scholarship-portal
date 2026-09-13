@@ -16,6 +16,10 @@ export const homeContent = {
     description:
       "Full coaching scholarships for meritorious students. Build your future through expert faculty, complete tuition support and career guidance.",
 
+    announcementEnabled: true,
+
+    announcementMessage: "APPLICATION ONGOING FOR 2027 - 2029 BATCH",
+
     primaryCta: uiCopy.applyNow,
 
     secondaryCta: uiCopy.viewScholarships,

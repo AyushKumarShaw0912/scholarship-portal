@@ -24,6 +24,7 @@ export async function Benefits() {
                 title={benefit.title}
                 description={benefit.description}
                 icon={benefit.icon}
+                imageUrl={benefit.imageUrl}
               />
             ))}
           </div>
