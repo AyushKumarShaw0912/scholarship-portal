@@ -12,7 +12,7 @@ async function fetchScholarshipsFromCms(
   const payload = await getPayloadClient();
   const result = await payload.find({
     collection: "scholarships",
-    depth: 0,
+    depth: 1,
     limit: 100,
     pagination: false,
     ...publicReadOptions,
@@ -61,7 +61,7 @@ export async function getScholarshipBySlug(
       const payload = await getPayloadClient();
       const result = await payload.find({
         collection: "scholarships",
-        depth: 0,
+        depth: 1,
         limit: 1,
         ...publicReadOptions,
         where: {

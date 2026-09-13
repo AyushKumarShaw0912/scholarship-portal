@@ -3,20 +3,8 @@ import type { NavigationItem, SiteSettings } from "@/types";
 import type { siteConfig } from "@/config/site";
 import type { navigation } from "@/config/navigation";
 
+import { type MediaRef, mediaUrl } from "./media";
 import { hasText, mapStringList, toStringList } from "./utils";
-
-type MediaRef =
-  | number
-  | string
-  | {
-      url?: string | null;
-      sizes?: {
-        logo?: { url?: string | null } | null;
-        thumbnail?: { url?: string | null } | null;
-      } | null;
-    }
-  | null
-  | undefined;
 
 type SiteDoc = {
   name?: string | null;
@@ -39,25 +27,6 @@ type SiteDoc = {
       }[]
     | null;
 };
-
-function mediaUrl(
-  value: MediaRef,
-  preferredSize?: "logo" | "thumbnail",
-): string | null {
-  if (!value || typeof value === "number" || typeof value === "string") {
-    return null;
-  }
-
-  if (preferredSize === "logo" && hasText(value.sizes?.logo?.url)) {
-    return value.sizes.logo.url;
-  }
-
-  if (preferredSize === "thumbnail" && hasText(value.sizes?.thumbnail?.url)) {
-    return value.sizes.thumbnail.url;
-  }
-
-  return hasText(value.url) ? value.url : null;
-}
 
 export function toSiteSettings(doc: SiteDoc): SiteSettings | null {
   if (

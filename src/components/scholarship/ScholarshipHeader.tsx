@@ -9,6 +9,8 @@ import { ROUTES } from "@/constants/routes";
 import { Container, Section } from "@/layout";
 import { CtaLink } from "@/components/actions/CtaLink";
 
+import { ScholarshipLogo } from "./ScholarshipLogo";
+
 interface ScholarshipHeaderProps {
   readonly scholarship: Scholarship;
 }
@@ -29,8 +31,15 @@ export async function ScholarshipHeader({
           </Link>
 
           <div className="mt-8 space-y-6">
-            <div className="motion-enter motion-delay-1 inline-flex rounded-full border bg-primary/5 px-4 py-1 text-sm font-medium text-primary">
-              {uiCopy.scholarshipProgram}
+            <div className="motion-enter motion-delay-1 flex flex-wrap items-center gap-3">
+              <ScholarshipLogo
+                title={scholarship.title}
+                logoUrl={scholarship.logoUrl}
+                size="lg"
+              />
+              <div className="inline-flex rounded-full border bg-primary/5 px-4 py-1 text-sm font-medium text-primary">
+                {uiCopy.scholarshipProgram}
+              </div>
             </div>
 
             <h1 className="motion-enter motion-delay-2 text-4xl font-bold tracking-tight md:text-5xl">

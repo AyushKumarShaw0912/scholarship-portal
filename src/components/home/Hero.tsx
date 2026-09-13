@@ -7,6 +7,8 @@ import { CtaLink } from "@/components/actions/CtaLink";
 
 export async function Hero() {
   const { hero } = await getHomeContent();
+  const showAnnouncement =
+    hero.announcementEnabled && Boolean(hero.announcementMessage?.trim());
 
   return (
     <Section spacing="lg">
@@ -26,7 +28,33 @@ export async function Hero() {
             {hero.description}
           </p>
 
-          <div className="motion-enter motion-delay-3 mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          {showAnnouncement ? (
+            <div className="motion-enter motion-delay-3 mx-auto mt-8 max-w-xl">
+              <div
+                className="announcement-banner relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/5 px-5 py-3.5"
+                role="status"
+              >
+                <div
+                  className="announcement-sheen pointer-events-none absolute inset-0"
+                  aria-hidden
+                />
+                <div className="relative flex items-center justify-center gap-3">
+                  <span
+                    className="announcement-pulse relative flex size-2.5 shrink-0"
+                    aria-hidden
+                  >
+                    <span className="absolute inline-flex size-full rounded-full bg-primary opacity-60" />
+                    <span className="relative inline-flex size-2.5 rounded-full bg-primary" />
+                  </span>
+                  <p className="text-sm font-semibold tracking-wide text-primary sm:text-base">
+                    {hero.announcementMessage}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          <div className="motion-enter motion-delay-4 mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <CtaLink
               href={getApplyPath()}
               label={hero.primaryCta}
@@ -40,7 +68,7 @@ export async function Hero() {
             />
           </div>
 
-          <div className="motion-enter motion-delay-4 mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="motion-enter motion-delay-5 mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {hero.stats.map((stat) => (
               <StatCard
                 key={stat.label}

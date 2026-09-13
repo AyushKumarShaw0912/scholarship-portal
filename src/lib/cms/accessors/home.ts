@@ -12,7 +12,7 @@ export async function getHomeContent(): Promise<HomeContent> {
       const payload = await getPayloadClient();
       const doc = await payload.findGlobal({
         slug: "home",
-        depth: 0,
+        depth: 1,
         ...publicReadOptions,
       });
 

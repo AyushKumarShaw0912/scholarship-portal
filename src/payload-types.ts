@@ -169,12 +169,28 @@ export interface User {
 export interface Media {
   id: number;
   alt: string;
+  cloudinaryPublicId?: string | null;
+  cloudinaryUrl?: string | null;
+  cloudinaryResourceType?: string | null;
+  cloudinaryFormat?: string | null;
+  cloudinaryVersion?: number | null;
+  /**
+   * Direct URL to the original file without transformations
+   */
+  originalUrl?: string | null;
+  /**
+   * URL with applied transformations
+   */
+  transformedUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
   mimeType?: string | null;
+  /**
+   * File size in bytes
+   */
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
@@ -182,18 +198,50 @@ export interface Media {
   focalY?: number | null;
   sizes?: {
     thumbnail?: {
+      cloudinaryPublicId?: string | null;
+      cloudinaryUrl?: string | null;
+      cloudinaryResourceType?: string | null;
+      cloudinaryFormat?: string | null;
+      cloudinaryVersion?: number | null;
+      /**
+       * Direct URL to the original file without transformations
+       */
+      originalUrl?: string | null;
+      /**
+       * URL with applied transformations
+       */
+      transformedUrl?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
       mimeType?: string | null;
+      /**
+       * File size in bytes
+       */
       filesize?: number | null;
       filename?: string | null;
     };
     logo?: {
+      cloudinaryPublicId?: string | null;
+      cloudinaryUrl?: string | null;
+      cloudinaryResourceType?: string | null;
+      cloudinaryFormat?: string | null;
+      cloudinaryVersion?: number | null;
+      /**
+       * Direct URL to the original file without transformations
+       */
+      originalUrl?: string | null;
+      /**
+       * URL with applied transformations
+       */
+      transformedUrl?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
       mimeType?: string | null;
+      /**
+       * File size in bytes
+       */
       filesize?: number | null;
       filename?: string | null;
     };
@@ -209,6 +257,10 @@ export interface Scholarship {
   slug: string;
   shortDescription: string;
   description: string;
+  /**
+   * Optional scholarship logo. When empty, cards and headers keep the default layout.
+   */
+  logo?: (number | null) | Media;
   isActive?: boolean | null;
   eligibility: {
     value: string;
@@ -414,6 +466,13 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  cloudinaryPublicId?: T;
+  cloudinaryUrl?: T;
+  cloudinaryResourceType?: T;
+  cloudinaryFormat?: T;
+  cloudinaryVersion?: T;
+  originalUrl?: T;
+  transformedUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -431,6 +490,13 @@ export interface MediaSelect<T extends boolean = true> {
         thumbnail?:
           | T
           | {
+              cloudinaryPublicId?: T;
+              cloudinaryUrl?: T;
+              cloudinaryResourceType?: T;
+              cloudinaryFormat?: T;
+              cloudinaryVersion?: T;
+              originalUrl?: T;
+              transformedUrl?: T;
               url?: T;
               width?: T;
               height?: T;
@@ -441,6 +507,13 @@ export interface MediaSelect<T extends boolean = true> {
         logo?:
           | T
           | {
+              cloudinaryPublicId?: T;
+              cloudinaryUrl?: T;
+              cloudinaryResourceType?: T;
+              cloudinaryFormat?: T;
+              cloudinaryVersion?: T;
+              originalUrl?: T;
+              transformedUrl?: T;
               url?: T;
               width?: T;
               height?: T;
@@ -459,6 +532,7 @@ export interface ScholarshipsSelect<T extends boolean = true> {
   slug?: T;
   shortDescription?: T;
   description?: T;
+  logo?: T;
   isActive?: T;
   eligibility?:
     | T
@@ -660,6 +734,14 @@ export interface Home {
     title: string;
     highlightedTitle: string;
     description: string;
+    /**
+     * When enabled, shows the announcement banner between the description and CTA buttons.
+     */
+    announcementEnabled?: boolean | null;
+    /**
+     * Eye-catching banner text on the home hero. Leave empty to hide.
+     */
+    announcementMessage?: string | null;
     primaryCta: string;
     secondaryCta: string;
     stats: {
@@ -691,6 +773,10 @@ export interface Home {
     description: string;
     icon:
       'Award' | 'BookOpen' | 'Brain' | 'FileText' | 'GraduationCap' | 'Mail' | 'MapPin' | 'Phone' | 'Trophy' | 'Users';
+    /**
+     * Optional image. When set, replaces the Lucide icon on the home benefit card.
+     */
+    image?: (number | null) | Media;
     id?: string | null;
   }[];
   applicationSteps: {
@@ -967,6 +1053,8 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         highlightedTitle?: T;
         description?: T;
+        announcementEnabled?: T;
+        announcementMessage?: T;
         primaryCta?: T;
         secondaryCta?: T;
         stats?:
@@ -1011,6 +1099,7 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         icon?: T;
+        image?: T;
         id?: T;
       };
   applicationSteps?:
