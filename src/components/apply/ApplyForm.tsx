@@ -31,9 +31,7 @@ function subjectLabel(template: string, n: number): string {
   return template.replaceAll("{n}", String(n));
 }
 
-function readFormValues(
-  formData: FormData,
-): Record<FieldName, string> {
+function readFormValues(formData: FormData): Record<FieldName, string> {
   const get = (name: FieldName) => {
     const value = formData.get(name);
     return typeof value === "string" ? value : "";
@@ -93,8 +91,15 @@ export function ApplyForm({ content }: ApplyFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
-  const { labels, options, sections, subjectDefaults, success, errors, submit } =
-    content;
+  const {
+    labels,
+    options,
+    sections,
+    subjectDefaults,
+    success,
+    errors,
+    submit,
+  } = content;
 
   function clearFieldError(name: FieldName) {
     setFieldErrors((current) => {
@@ -470,10 +475,7 @@ export function ApplyForm({ content }: ApplyFormProps) {
             const maxKey = `subject${n}Max` as const;
 
             return (
-              <div
-                key={n}
-                className="grid gap-3 sm:grid-cols-[1.4fr_1fr_1fr]"
-              >
+              <div key={n} className="grid gap-3 sm:grid-cols-[1.4fr_1fr_1fr]">
                 <div>
                   <label className={labelClass} htmlFor={nameKey}>
                     {subjectLabel(labels.subjectName, n)}

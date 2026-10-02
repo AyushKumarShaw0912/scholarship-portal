@@ -14,15 +14,15 @@ function isSvgUrl(url: string): boolean {
 }
 
 const sizeClasses = {
-  sm: "h-12 w-12",
-  md: "h-14 w-14",
-  lg: "h-16 w-16",
+  sm: "h-14 w-14",
+  md: "h-16 w-16",
+  lg: "h-20 w-20",
 } as const;
 
 const imageSizes = {
-  sm: 48,
-  md: 56,
-  lg: 64,
+  sm: 56,
+  md: 64,
+  lg: 80,
 } as const;
 
 export function ScholarshipLogo({
