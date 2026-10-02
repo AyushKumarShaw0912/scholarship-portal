@@ -39,7 +39,7 @@ function subjectFields(index: 1 | 2 | 3 | 4 | 5) {
       name: `subject${index}Name`,
       type: "text" as const,
       required: true,
-      label: `Subject ${index} name`,
+      label: `Subject ${index}`,
       maxLength: APPLY_LIMITS.subjectName.max,
     },
     {
@@ -320,7 +320,8 @@ export const Applications: CollectionConfig = {
       admin: {
         position: "sidebar",
         readOnly: true,
-        description: "Set automatically when the Google Form invite email is sent.",
+        description:
+          "Set automatically when the Google Form invite email is sent.",
         date: {
           pickerAppearance: "dayAndTime",
         },
