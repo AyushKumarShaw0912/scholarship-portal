@@ -26,7 +26,7 @@ export const applyContent = {
       class10PreBoardPercentage: "Class 10 pre-board %",
       class10TotalMarks: "Total marks obtained",
       class10MaxMarks: "Maximum marks",
-      subjectName: "Subject {n} name",
+      subjectName: "Subject {n}",
       subjectObtained: "Obtained",
       subjectMax: "Max",
       academicAchievements: "Any other academic achievements",

@@ -14,15 +14,15 @@ function isSvgUrl(url: string): boolean {
 }
 
 const sizeClasses = {
-  sm: "h-10 w-10",
-  md: "h-12 w-12",
-  lg: "h-14 w-14",
+  sm: "h-12 w-12",
+  md: "h-14 w-14",
+  lg: "h-16 w-16",
 } as const;
 
 const imageSizes = {
-  sm: 40,
-  md: 48,
-  lg: 56,
+  sm: 48,
+  md: 56,
+  lg: 64,
 } as const;
 
 export function ScholarshipLogo({
@@ -51,7 +51,7 @@ export function ScholarshipLogo({
         <img
           src={logoUrl}
           alt={`${title} logo`}
-          className="h-[70%] w-[70%] object-contain"
+          className="h-[85%] w-[85%] object-contain"
         />
       ) : (
         <Image
@@ -59,7 +59,7 @@ export function ScholarshipLogo({
           alt={`${title} logo`}
           width={dimension}
           height={dimension}
-          className="object-contain p-1.5"
+          className="object-contain p-1"
         />
       )}
     </span>
